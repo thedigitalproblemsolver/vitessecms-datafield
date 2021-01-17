@@ -4,7 +4,7 @@ namespace VitesseCms\Datafield\Forms;
 
 use VitesseCms\Datafield\Helpers\DatafieldUtil;
 use VitesseCms\Form\AbstractForm;
-use VitesseCms\Core\Models\Datafield;
+use VitesseCms\Datafield\Models\Datafield;
 use VitesseCms\Form\Helpers\ElementHelper;
 use VitesseCms\Form\Models\Attributes;
 

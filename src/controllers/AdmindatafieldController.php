@@ -4,7 +4,7 @@ namespace VitesseCms\Datafield\Controllers;
 
 use VitesseCms\Admin\AbstractAdminController;
 use VitesseCms\Datafield\Forms\DataFieldForm;
-use VitesseCms\Core\Models\Datafield;
+use VitesseCms\Datafield\Models\Datafield;
 
 class AdmindatafieldController extends AbstractAdminController
 {

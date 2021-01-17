@@ -3,7 +3,7 @@
 namespace VitesseCms\Datafield\Models;
 
 use VitesseCms\Content\Models\Item;
-use VitesseCms\Core\Models\Datafield;
+use VitesseCms\Datafield\Models\Datafield;
 use VitesseCms\Database\AbstractCollection;
 use VitesseCms\Datafield\AbstractField;
 use VitesseCms\Form\AbstractForm;

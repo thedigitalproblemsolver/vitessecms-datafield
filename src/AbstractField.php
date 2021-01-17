@@ -10,7 +10,7 @@ use VitesseCms\Core\Interfaces\InjectableInterface;
 use VitesseCms\Datafield\Forms\DataFieldForm;
 use VitesseCms\Datafield\Interfaces\AdminformInterface;
 use VitesseCms\Form\AbstractForm;
-use VitesseCms\Core\Models\Datafield;
+use VitesseCms\Datafield\Models\Datafield;
 use VitesseCms\Form\Interfaces\AbstractFormInterface;
 use Phalcon\Di;
 use Phalcon\Utils\Slug;

@@ -2,7 +2,7 @@
 
 namespace VitesseCms\Datafield\Factories;
 
-use VitesseCms\Core\Models\Datafield;
+use VitesseCms\Datafield\Models\Datafield;
 
 /**
  * Class DatafieldFactory
