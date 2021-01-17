@@ -13,23 +13,7 @@ class AdminMenuListener
     {
         if ($adminMenu->getUser()->getPermissionRole() === 'superadmin') :
             $children = new AdminMenuNavBarChildren();
-            $children->addChild('Data fields','admin/field/admindatafield/adminList');
-            var_dump('fff');
-            die();
-            /*$formOptionsGroups = $adminMenu->getGroups()->getByKey('formOptions');
-            if ($formOptionsGroups !== null) :
-                $children->addLine();
-                $datagroups = $formOptionsGroups->getDatagroups();
-                while ($datagroups->valid()) :
-                    $formOptionGroup = $datagroups->current();
-                    $children->addChild(
-                        $formOptionGroup->getNameField(),
-                        'admin/content/adminitem/adminList/?filter[datagroup]='.$formOptionGroup->getId()
-                    );
-                    $datagroups->next();
-                endwhile;
-            endif;*/
-
+            $children->addChild('Data fields','admin/datafield/admindatafield/adminList');
             $adminMenu->addDropdown('DataDesign',$children);
         endif;
     }
