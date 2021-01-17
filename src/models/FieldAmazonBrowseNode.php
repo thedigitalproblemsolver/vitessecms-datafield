@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace VitesseCms\Field\Models;
+namespace VitesseCms\Datafield\Models;
 
 use VitesseCms\Database\AbstractCollection;
 use VitesseCms\Field\Enums\FieldAmazonEnum;

@@ -1,6 +1,6 @@
 <?php
 
-namespace VitesseCms\Field\Factories;
+namespace VitesseCms\Datafield\Factories;
 
 use VitesseCms\Field\Enums\FieldSizeAndColorEnum;
 use Phalcon\Tag;

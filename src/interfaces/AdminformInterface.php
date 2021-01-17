@@ -1,6 +1,6 @@
 <?php
 
-namespace VitesseCms\Field\Interfaces;
+namespace VitesseCms\Datafield\Interfaces;
 
 use VitesseCms\Database\AbstractCollection;
 use VitesseCms\Form\AbstractForm;

@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace VitesseCms\Field\Forms;
+namespace VitesseCms\Datafield\Forms;
 
 use VitesseCms\Content\Models\Item;
 use VitesseCms\Database\AbstractCollection;

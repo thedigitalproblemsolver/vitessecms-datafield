@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace VitesseCms\Field\Controllers;
+namespace VitesseCms\Datafield\Controllers;
 
 use VitesseCms\Admin\AbstractAdminController;
 use VitesseCms\Field\Forms\DataFieldForm;
