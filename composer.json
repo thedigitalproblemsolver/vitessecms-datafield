@@ -17,4 +17,8 @@
       "VitesseCms\\Datafield\\": "src/"
     }
   },
+  "require": {
+    "vitessecms/configuration": "~0.0.2",
+    "vitessecms/admin": "~0.0.6"
+  }
 }

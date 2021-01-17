@@ -2,6 +2,7 @@
 
 namespace VitesseCms\Datafield\Forms;
 
+use VitesseCms\Datafield\Helpers\DatafieldUtil;
 use VitesseCms\Form\AbstractForm;
 use VitesseCms\Core\Models\Datafield;
 use VitesseCms\Form\Helpers\ElementHelper;
@@ -30,7 +31,7 @@ class DataFieldForm extends AbstractForm
             '%ADMIN_DATAFIELD_TYPE%',
             'type',
             (new Attributes())
-                ->setOptions(ElementHelper::arrayToSelectOptions((new Datafield)->getTypes()))
+                ->setOptions(ElementHelper::arrayToSelectOptions(DatafieldUtil::getTypes($this->configuration)))
                 ->setRequired()
         )->addSubmitButton('%CORE_SAVE%');
     }
