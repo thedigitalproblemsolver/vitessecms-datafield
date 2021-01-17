@@ -4,6 +4,9 @@ namespace VitesseCms\Datafield\Enums;
 
 use VitesseCms\Core\AbstractEnum;
 
+/**
+ * @deprecated move to shop
+ */
 class FieldSizeAndColorEnum extends AbstractEnum
 {
     public const SIZE_S = 'Small';

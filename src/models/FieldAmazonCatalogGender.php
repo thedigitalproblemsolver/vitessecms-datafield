@@ -9,6 +9,9 @@ use VitesseCms\Form\AbstractForm;
 use VitesseCms\Form\Helpers\ElementHelper;
 use VitesseCms\Form\Models\Attributes;
 
+/**
+ * @deprecated move to shop
+ */
 class FieldAmazonCatalogGender extends AbstractField
 {
     public function buildItemFormElement(

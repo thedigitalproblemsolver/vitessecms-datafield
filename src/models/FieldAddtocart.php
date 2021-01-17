@@ -7,6 +7,9 @@ use VitesseCms\Form\AbstractForm;
 use VitesseCms\Core\Models\Datafield;
 use VitesseCms\Datafield\AbstractField;
 
+/**
+ * @deprecated move to shop
+ */
 class FieldAddtocart extends AbstractField
 {
     public function buildItemFormElement(

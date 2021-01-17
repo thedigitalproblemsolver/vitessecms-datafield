@@ -13,6 +13,9 @@ use VitesseCms\Shop\Models\Discount;
 use VitesseCms\Shop\Utils\PriceUtil;
 use Phalcon\Di;
 
+/**
+ * @deprecated move to shop
+ */
 class FieldPrice extends AbstractField
 {
     public function buildItemFormElement(

@@ -13,6 +13,9 @@ use VitesseCms\Media\Enums\AssetsEnum;
 use Phalcon\Http\Request;
 use Phalcon\Tag;
 
+/**
+ * @deprecated move to shop
+ */
 class FieldSizeAndColor extends AbstractField
 {
     public function buildItemFormElement(

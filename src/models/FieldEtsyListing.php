@@ -8,6 +8,9 @@ use VitesseCms\Datafield\AbstractField;
 use VitesseCms\Form\AbstractForm;
 use VitesseCms\Form\Models\Attributes;
 
+/**
+ * @deprecated move to etsy
+ */
 class FieldEtsyListing extends AbstractField
 {
     public function buildItemFormElement(

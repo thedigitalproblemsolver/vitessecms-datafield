@@ -4,6 +4,9 @@ namespace VitesseCms\Datafield\Enums;
 
 use VitesseCms\Core\AbstractEnum;
 
+/**
+ * @deprecated move to shop
+ */
 class FieldAmazonEnum extends AbstractEnum
 {
     public const nodes = [

@@ -9,6 +9,9 @@ use VitesseCms\Datafield\Enums\FieldSizeAndColorEnum;
 use VitesseCms\Form\AbstractForm;
 use VitesseCms\Form\Models\Attributes;
 
+/**
+ * @deprecated move to etsy
+ */
 class FieldEtsyCategory extends AbstractField
 {
     public function buildItemFormElement(
