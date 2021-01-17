@@ -5,7 +5,7 @@ namespace VitesseCms\Datafield\Models;
 use VitesseCms\Content\Models\Item;
 use VitesseCms\Core\Models\Datafield;
 use VitesseCms\Database\AbstractCollection;
-use VitesseCms\Field\AbstractField;
+use VitesseCms\Datafield\AbstractField;
 use VitesseCms\Form\AbstractForm;
 use VitesseCms\Shop\Enum\DiscountEnum;
 use VitesseCms\Shop\Helpers\ProductHelper;

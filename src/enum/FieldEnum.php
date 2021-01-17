@@ -3,7 +3,7 @@
 namespace VitesseCms\Datafield\Enums;
 
 use VitesseCms\Core\AbstractEnum;
-use VitesseCms\Field\Models\FieldDatagroup;
+use VitesseCms\Datafield\Models\FieldDatagroup;
 
 class FieldEnum extends AbstractEnum
 {

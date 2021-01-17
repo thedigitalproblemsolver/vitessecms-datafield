@@ -4,9 +4,9 @@ namespace VitesseCms\Datafield\Models;
 
 use VitesseCms\Core\Models\Datafield;
 use VitesseCms\Database\AbstractCollection;
-use VitesseCms\Field\AbstractField;
-use VitesseCms\Field\Enums\FieldSizeAndColorEnum;
-use VitesseCms\Field\Factories\FieldSizeAndColorFactory;
+use VitesseCms\Datafield\AbstractField;
+use VitesseCms\Datafield\Enums\FieldSizeAndColorEnum;
+use VitesseCms\Datafield\Factories\FieldSizeAndColorFactory;
 use VitesseCms\Form\AbstractForm;
 use VitesseCms\Form\Interfaces\AbstractFormInterface;
 use VitesseCms\Media\Enums\AssetsEnum;

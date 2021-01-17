@@ -5,7 +5,7 @@ namespace VitesseCms\Datafield\Models;
 use VitesseCms\Database\AbstractCollection;
 use VitesseCms\Form\AbstractForm;
 use VitesseCms\Core\Models\Datafield;
-use VitesseCms\Field\AbstractField;
+use VitesseCms\Datafield\AbstractField;
 
 class FieldAddtocart extends AbstractField
 {

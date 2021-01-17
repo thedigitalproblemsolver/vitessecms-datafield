@@ -8,7 +8,7 @@ use VitesseCms\Admin\Utils\AdminUtil;
 use VitesseCms\Core\Utils\FileUtil;
 use VitesseCms\Form\AbstractForm;
 use VitesseCms\Core\Models\Datafield;
-use VitesseCms\Field\AbstractField;
+use VitesseCms\Datafield\AbstractField;
 
 class FieldImage extends AbstractField
 {

@@ -4,7 +4,7 @@ namespace VitesseCms\Datafield\Forms;
 
 use VitesseCms\Database\AbstractCollection;
 use VitesseCms\Core\Factories\ObjectFactory;
-use VitesseCms\Field\Interfaces\AdminformInterface;
+use VitesseCms\Datafield\Interfaces\AdminformInterface;
 use VitesseCms\Form\AbstractForm;
 use VitesseCms\Form\Models\Attributes;
 
