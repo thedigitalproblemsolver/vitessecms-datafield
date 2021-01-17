@@ -14,7 +14,7 @@
   ],
   "autoload": {
     "psr-4": {
-      "VitesseCms\\Field\\": "src/"
+      "VitesseCms\\Datafield\\": "src/"
     }
   },
 }
