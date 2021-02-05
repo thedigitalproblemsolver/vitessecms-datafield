@@ -7,21 +7,17 @@ use VitesseCms\Form\AbstractForm;
 use VitesseCms\Datafield\Models\Datafield;
 use VitesseCms\Datafield\AbstractField;
 use VitesseCms\Form\Interfaces\AbstractFormInterface;
+use VitesseCms\Form\Models\Attributes;
 
 class FieldTexteditor extends AbstractField
 {
     public function buildItemFormElement(
         AbstractForm $form,
         Datafield $datafield,
+        Attributes $attributes,
         AbstractCollection $data = null
     ) {
-        $this->setOption('inputClass', 'editor');
-        $form->_(
-            'textarea',
-            $datafield->getNameField(),
-            $datafield->getCallingName(),
-            $this->getOptions()
-        );
+        $form->addEditor($datafield->getNameField(), $datafield->getCallingName(), $attributes);
     }
 
     public function renderFilter(
@@ -29,24 +25,18 @@ class FieldTexteditor extends AbstractField
         Datafield $datafield,
         AbstractCollection $data = null
     ): void {
-        $filter->_(
-            'hidden',
-            null,
+        $filter->addHidden(
             'filter[textFields]['.uniqid('',false).']',
-            [
-                'value' => $datafield->getCallingName()
-            ]
+            (new Attributes())->setDefaultValue($datafield->getCallingName())
         );
     }
 
     public function getSearchValue(
         AbstractCollection $item,
-        string $languageShort, Datafield $datafield
+        string $languageShort,
+        Datafield $datafield
     ) {
-        $result = $item->_(
-            $datafield->getCallingName(),
-            $languageShort
-        );
+        $result = $item->_($datafield->getCallingName(), $languageShort);
         if(is_string($result)) :
             return trim(strip_tags($result));
         endif;

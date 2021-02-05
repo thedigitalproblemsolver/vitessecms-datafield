@@ -30,6 +30,11 @@ class Datafield extends AbstractCollection
      */
     public $model;
 
+    /**
+     * @var string
+     */
+    public $inputType;
+
     public function afterFetch()
     {
         parent::afterFetch();
@@ -93,6 +98,11 @@ class Datafield extends AbstractCollection
     public function getDatagroup(): ?string
     {
         return $this->datagroup;
+    }
+
+    public function getInputType(): string
+    {
+        return $this->inputType;
     }
 
     public function getFieldType(): ?string

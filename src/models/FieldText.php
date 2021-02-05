@@ -7,6 +7,7 @@ use VitesseCms\Database\AbstractCollection;
 use VitesseCms\Datafield\AbstractField;
 use VitesseCms\Form\AbstractForm;
 use VitesseCms\Form\Interfaces\AbstractFormInterface;
+use VitesseCms\Form\Models\Attributes;
 use VitesseCms\Media\Enums\AssetsEnum;
 
 class FieldText extends AbstractField
@@ -14,19 +15,26 @@ class FieldText extends AbstractField
     public function buildItemFormElement(
         AbstractForm $form,
         Datafield $datafield,
+        Attributes $attributes,
         AbstractCollection $data = null
     ) {
-        $inputType = 'text';
-        if ($datafield->_('inputType')) :
-            $inputType = $datafield->_('inputType');
-        endif;
-
-        $form->_(
-            $inputType,
-            $datafield->getNameField(),
-            $datafield->getCallingName(),
-            $this->getOptions()
-        );
+        switch ($datafield->getInputType()):
+            case 'number':
+                $form->addNumber($datafield->getNameField(), $datafield->getCallingName(), $attributes);
+                break;
+            case 'tel':
+                $form->addPhone($datafield->getNameField(), $datafield->getCallingName(), $attributes);
+                break;
+            case 'text':
+                $form->addText($datafield->getNameField(), $datafield->getCallingName(), $attributes);
+                break;
+            case 'url':
+                $form->addUrl($datafield->getNameField(), $datafield->getCallingName(), $attributes);
+                break;
+            default:
+                var_dump($datafield->getInputType());
+                die();
+        endswitch;
     }
 
     public function renderFilter(
@@ -68,9 +76,6 @@ class FieldText extends AbstractField
 
     public function renderAdminlistFilter(AbstractFormInterface $filter, Datafield $datafield): void
     {
-        $filter->addText(
-            $datafield->getNameField(),
-            $this->getFieldname($datafield)
-        );
+        $filter->addText($datafield->getNameField(), $this->getFieldname($datafield));
     }
 }

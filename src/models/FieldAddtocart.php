@@ -6,6 +6,7 @@ use VitesseCms\Database\AbstractCollection;
 use VitesseCms\Form\AbstractForm;
 use VitesseCms\Datafield\Models\Datafield;
 use VitesseCms\Datafield\AbstractField;
+use VitesseCms\Form\Models\Attributes;
 
 /**
  * @deprecated move to shop
@@ -15,16 +16,13 @@ class FieldAddtocart extends AbstractField
     public function buildItemFormElement(
         AbstractForm $form,
         Datafield $datafield,
+        Attributes $attributes,
         AbstractCollection $data = null
     ) {
-        $this->setOption('checked', 'checked');
-        $this->setOption('readonly', 'readonly');
-        $this->setOption('value', true);
-        $form->_(
-            'checkbox',
+        $form->addToggle(
             $datafield->getNameField(),
             $datafield->getCallingName(),
-            $this->getOptions()
+            $attributes->setChecked()->setReadonly()
         );
     }
 }

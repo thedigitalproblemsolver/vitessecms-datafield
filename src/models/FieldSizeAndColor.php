@@ -9,6 +9,7 @@ use VitesseCms\Datafield\Enums\FieldSizeAndColorEnum;
 use VitesseCms\Datafield\Factories\FieldSizeAndColorFactory;
 use VitesseCms\Form\AbstractForm;
 use VitesseCms\Form\Interfaces\AbstractFormInterface;
+use VitesseCms\Form\Models\Attributes;
 use VitesseCms\Media\Enums\AssetsEnum;
 use Phalcon\Http\Request;
 use Phalcon\Tag;
@@ -21,6 +22,7 @@ class FieldSizeAndColor extends AbstractField
     public function buildItemFormElement(
         AbstractForm $form,
         Datafield $datafield,
+        Attributes $attributes,
         AbstractCollection $data = null
     ) {
         if ($data !== null) {
@@ -181,16 +183,15 @@ class FieldSizeAndColor extends AbstractField
             ];
         endforeach;
 
-        $this->setOption('options', $options);
-        $this->setOption('multiple', true);
-        $this->setOption('noEmptyText', true);
-        $this->setOption('inputClass', 'select2');
-
-        $filter->_(
+        $filter->addDropdown(
             'select',
             '%SHOP_SIZE%',
             'filter[variations][]',
-            $this->getOptions()
+            (new Attributes())
+                ->setMultiple()
+                ->setNoEmptyText()
+                ->setInputClass(AssetsEnum::SELECT2)
+                ->setOptions($options)
         );
     }
 
