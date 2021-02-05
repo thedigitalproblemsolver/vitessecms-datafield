@@ -14,14 +14,10 @@ use VitesseCms\Datafield\Models\Datafield;
 use VitesseCms\Form\Interfaces\AbstractFormInterface;
 use Phalcon\Di;
 use Phalcon\Utils\Slug;
+use VitesseCms\Form\Models\Attributes;
 
 abstract class AbstractField extends AbstractInjectable
 {
-    /**
-     * @var array
-     */
-    protected $options = [];
-
     /**
      * @var InjectableInterface
      */
@@ -35,29 +31,16 @@ abstract class AbstractField extends AbstractInjectable
     }
 
     /**
-     * @param string $key
-     * @param $value
-     */
-    public function setOption(string $key, $value)
-    {
-        $this->options[$key] = $value;
-    }
-
-    /**
-     * @return array
-     */
-    public function getOptions()
-    {
-        return $this->options;
-    }
-
-    /**
      * @param AbstractForm $form
      * @param Datafield $datafield
      * @param AbstractCollection|null $data
      */
-    public function buildItemFormElement(AbstractForm $form, Datafield $datafield, AbstractCollection $data = null)
-    {
+    public function buildItemFormElement(
+        AbstractForm $form,
+        Datafield $datafield,
+        Attributes $attributes,
+        AbstractCollection $data = null
+    ){
     }
 
     /**

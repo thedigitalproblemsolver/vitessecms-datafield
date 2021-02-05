@@ -17,6 +17,7 @@ class FieldEtsyCategory extends AbstractField
     public function buildItemFormElement(
         AbstractForm $form,
         Datafield $datafield,
+        Attributes $attributes,
         AbstractCollection $data = null
     ) {
         $form->addText('Etsy CategoryId', 'etsyCategoryId')

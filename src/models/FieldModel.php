@@ -7,11 +7,17 @@ use VitesseCms\Database\AbstractCollection;
 use VitesseCms\Datafield\AbstractField;
 use VitesseCms\Form\AbstractForm;
 use VitesseCms\Form\Helpers\ElementHelper;
+use VitesseCms\Form\Models\Attributes;
+use VitesseCms\Media\Enums\AssetsEnum;
 
 class FieldModel extends AbstractField
 {
-    public function buildItemFormElement(AbstractForm $form, Datafield $datafield, AbstractCollection $data = null)
-    {
+    public function buildItemFormElement(
+        AbstractForm $form,
+        Datafield $datafield,
+        Attributes $attributes,
+        AbstractCollection $data = null
+    ){
         $model = $datafield->getModel();
         $model::addFindOrder('name');
         if ($datafield->_('displayLimit') && $datafield->_('displayLimit') > 0):
@@ -22,22 +28,17 @@ class FieldModel extends AbstractField
             $model::setFindValue('datagroup', ['$in' => $datafield->getDatagroup()]);
         endif;
 
-        $this->setOption('options', ElementHelper::arrayToSelectOptions($model::findAll()));
+        $attributes->setOptions(ElementHelper::arrayToSelectOptions($model::findAll()));
 
         if ($datafield->_('useSelect2')) :
-            $this->setOption('inputClass', 'select2');
+            $attributes->setInputClass(AssetsEnum::SELECT2);
         endif;
 
         if ($datafield->_('multiple')) :
-            $this->setOption('multiple', 'multiple');
+            $attributes->setMultiple();
         endif;
 
-        $form->_(
-            'select',
-            $datafield->getNameField(),
-            $datafield->getCallingName(),
-            $this->getOptions()
-        );
+        $form->addDropdown($datafield->getNameField(), $datafield->getCallingName(), $attributes);
     }
 
     public static function beforeSave(AbstractCollection $item, Datafield $datafield)
@@ -58,11 +59,7 @@ class FieldModel extends AbstractField
         endif;
     }
 
-    public function renderSlugPart(
-        AbstractCollection $item,
-        string $languageShort,
-        Datafield $datafield
-    ): string
+    public function renderSlugPart(AbstractCollection $item, string $languageShort, Datafield $datafield): string
     {
         return 'page:' . $item->_($datafield->getCallingName());
     }

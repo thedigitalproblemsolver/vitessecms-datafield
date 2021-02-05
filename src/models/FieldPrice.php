@@ -7,6 +7,9 @@ use VitesseCms\Datafield\Models\Datafield;
 use VitesseCms\Database\AbstractCollection;
 use VitesseCms\Datafield\AbstractField;
 use VitesseCms\Form\AbstractForm;
+use VitesseCms\Form\Helpers\ElementHelper;
+use VitesseCms\Form\Models\Attributes;
+use VitesseCms\Media\Enums\AssetsEnum;
 use VitesseCms\Shop\Enum\DiscountEnum;
 use VitesseCms\Shop\Helpers\ProductHelper;
 use VitesseCms\Shop\Models\Discount;
@@ -21,43 +24,35 @@ class FieldPrice extends AbstractField
     public function buildItemFormElement(
         AbstractForm $form,
         Datafield $datafield,
+        Attributes $attributes,
         AbstractCollection $data = null
     ) {
-
-        $this->setOption('step', 'any');
-        $this->setOption('min', '0');
-        $options = $this->getOptions();
-        $options['readonly'] = true;
-        $form->_(
-            'text',
+        $form->addText(
             $datafield->getNameField().' - ex. VAT',
             $datafield->getCallingName(),
-            $options
-        )->_(
-            'number',
+            (new Attributes())->setReadonly()
+        )->addNumber(
             $datafield->getNameField().' - purchase',
             $datafield->getCallingName().'_purchase',
-            $this->getOptions()
-        )->_(
-            'number',
+            (new Attributes())->setMin(0)
+        )->addNumber(
             $datafield->getNameField().' - inc. VAT',
             $datafield->getCallingName().'_sale',
-            $this->getOptions()
+            (new Attributes())->setMin(0)
         );
 
         Discount::setFindValue('target', ['$in' => [DiscountEnum::TARGET_PRODUCT, DiscountEnum::TARGET_FREE_SHIPPING]]);
-        $form->_(
-            'select',
+        $form->addDropdown(
             'Discount',
             'discount',
-            [
-                'options'    => Discount::class,
-                'multiple'   => true,
-                'inputClass' => 'select2',
-            ]
-        );
+            (new Attributes())->setInputClass(AssetsEnum::SELECT2)
+                ->setMultiple()
+                ->setOptions(ElementHelper::arrayToSelectOptions(Discount::findAll()))
+            )
+        ;
     }
 
+    //TODO move to listener
     public static function beforeMaincontent(Item $item, Datafield $datafield): void
     {
         $item->set(

@@ -7,40 +7,28 @@ use VitesseCms\Form\AbstractForm;
 use VitesseCms\Datafield\Models\Datafield;
 use VitesseCms\Datafield\AbstractField;
 use VitesseCms\Form\Interfaces\AbstractFormInterface;
+use VitesseCms\Form\Models\Attributes;
 
 class FieldCheckbox extends AbstractField
 {
     public function buildItemFormElement(
         AbstractForm $form,
         Datafield $datafield,
+        Attributes $attributes,
         AbstractCollection $data = null
     ) {
         if (
             is_object($data)
             && $data->_($datafield->getCallingName())
         ) :
-            $this->setOption('checked', true);
+            $attributes->setChecked();
         endif;
 
-        $form->_(
-            'checkbox',
-            $datafield->getNameField(),
-            $datafield->getCallingName(),
-            array_merge($this->getOptions(), ['value' => true])
-        );
+        $form->addToggle($datafield->getNameField(), $datafield->getCallingName(), $attributes);
     }
 
     public function renderFilter(AbstractFormInterface $filter, Datafield $datafield): void
     {
-        $fieldName = $this->getFieldname($datafield);
-        $this->setOption('value', true);
-        $this->setOption('template', 'checkbox_toggle');
-
-        $filter->_(
-            'checkbox',
-            $datafield->getNameField(),
-            $fieldName,
-            $this->getOptions()
-        );
+        $filter->addToggle($datafield->getNameField(), $this->getFieldname($datafield));
     }
 }
