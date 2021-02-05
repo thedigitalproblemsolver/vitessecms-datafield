@@ -12,6 +12,8 @@ use VitesseCms\Form\AbstractForm;
 use VitesseCms\Form\Helpers\ElementHelper;
 use VitesseCms\Form\Interfaces\AbstractFormInterface;
 use Phalcon\Utils\Slug;
+use VitesseCms\Form\Models\Attributes;
+use VitesseCms\Media\Enums\AssetsEnum;
 
 class FieldDatagroup extends AbstractField
 {
@@ -26,8 +28,12 @@ class FieldDatagroup extends AbstractField
         endif;
     }
 
-    public function buildItemFormElement(AbstractForm $form, Datafield $datafield, AbstractCollection $data = null)
-    {
+    public function buildItemFormElement(
+        AbstractForm $form,
+        Datafield $datafield,
+        Attributes $attributes,
+        AbstractCollection $data = null
+    ) {
         Item::setFindValue('datagroup', $datafield->getDatagroup());
         if ($datafield->_('itemParent')) :
             Item::setFindValue('parentId', $datafield->_('itemParent'));
@@ -57,59 +63,49 @@ class FieldDatagroup extends AbstractField
         ksort($options);
         $options = array_flip($options);
 
-        $this->setOption('options', ElementHelper::arrayToSelectOptions($options));
+        $attributes->setOptions(ElementHelper::arrayToSelectOptions($options));
 
         if ($datafield->_('multiple')) :
-            $this->setOption('multiple', true);
-            $this->setOption('inputClass', 'select2');
+            $attributes->setMultiple()->setInputClass(AssetsEnum::SELECT2);
         endif;
 
-        $form->_(
-            'select',
-            $datafield->_('name'),
-            $datafield->_('calling_name'),
-            $this->getOptions()
+        $form->addDropdown(
+            $datafield->getNameField(),
+            $datafield->getCallingName(),
+            $attributes
         );
     }
 
     public function renderFilter(AbstractFormInterface $filter, Datafield $datafield): void
     {
-        $fieldName = $this->getFieldname($datafield);
-
         Item::addFindOrder('name');
         Item::setFindValue('datagroup', $datafield->getDatagroup());
         if ($datafield->_('itemParent')) :
             Item::setFindValue('parentId', $datafield->_('itemParent'));
         endif;
-        $this->setOption('options', Item::findAll());
-        $this->setOption('multiple', true);
-        $this->setOption('noEmptyText', true);
-        $this->setOption('inputClass', 'select2');
 
-        $filter->_(
-            'select',
+        $filter->addDropdown(
             $datafield->getNameField(),
-            $fieldName.'[]',
-            $this->getOptions()
+            $this->getFieldname($datafield).'[]',
+            (new Attributes())->setMultiple()
+                ->setInputClass(AssetsEnum::SELECT2)
+                ->setNoEmptyText()
+                ->setOptions(Item::findAll())
         );
     }
 
     public function renderAdminlistFilter(AbstractFormInterface $filter, Datafield $datafield): void
     {
-        $fieldName = $this->getFieldname($datafield);
-
         Item::addFindOrder('name');
         Item::setFindValue('datagroup', $datafield->getDatagroup());
         if ($datafield->_('itemParent')) :
             Item::setFindValue('parentId', $datafield->_('itemParent'));
         endif;
-        $this->setOption('options', Item::findAll());
 
-        $filter->_(
-            'select',
+        $filter->addDropdown(
             $datafield->getNameField(),
-            $fieldName,
-            $this->getOptions()
+            $this->getFieldname($datafield),
+            (new Attributes())->setOptions(Item::findAll())
         );
     }
 

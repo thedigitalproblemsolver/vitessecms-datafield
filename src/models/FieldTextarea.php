@@ -7,20 +7,17 @@ use VitesseCms\Database\AbstractCollection;
 use VitesseCms\Datafield\AbstractField;
 use VitesseCms\Form\AbstractForm;
 use VitesseCms\Form\Interfaces\AbstractFormInterface;
+use VitesseCms\Form\Models\Attributes;
 
 class FieldTextarea extends AbstractField
 {
     public function buildItemFormElement(
         AbstractForm $form,
         Datafield $datafield,
+        Attributes $attributes,
         AbstractCollection $data = null
     ) {
-        $form->_(
-            'textarea',
-            $datafield->getNameField(),
-            $datafield->getCallingName(),
-            $this->getOptions()
-        );
+        $form->addTextarea($datafield->getNameField(), $datafield->getCallingName(), $attributes);
     }
 
     public function getSearchValue(AbstractCollection $item, string $languageShort, Datafield $datafield)
@@ -33,13 +30,9 @@ class FieldTextarea extends AbstractField
         Datafield $datafield,
         AbstractCollection $data = null
     ): void {
-        $filter->_(
-            'hidden',
-            null,
+        $filter->addHidden(
             'filter[textFields]['.uniqid('', true).']',
-            [
-                'value' => $datafield->_('calling_name'),
-            ]
+            (new Attributes())->setDefaultValue($datafield->getCallingName())
         );
     }
 }

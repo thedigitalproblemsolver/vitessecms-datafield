@@ -9,28 +9,37 @@ use VitesseCms\Core\Utils\FileUtil;
 use VitesseCms\Form\AbstractForm;
 use VitesseCms\Datafield\Models\Datafield;
 use VitesseCms\Datafield\AbstractField;
+use VitesseCms\Form\Models\Attributes;
 
 class FieldImage extends AbstractField
 {
-    public function buildItemFormElement(AbstractForm $form, Datafield $datafield, AbstractCollection $data = null)
-    {
-        if (AdminUtil::isAdminPage()) :
-            $this->setOption('template', 'filemanager');
-        endif;
-
+    public function buildItemFormElement(
+        AbstractForm $form,
+        Datafield $datafield,
+        Attributes $attributes,
+        AbstractCollection $data = null
+    ){
+        $allowedTypes = [];
         if ($datafield->_('allowedFiletypeGroups')) :
-            $filetypeGroups = [];
+            $allowedTypes = [];
             foreach ((array)$datafield->_('allowedFiletypeGroups') as $filetypeGroup) :
-                $filetypeGroups = array_merge($filetypeGroups, FileUtil::getFiletypesByGroup($filetypeGroup));
+                $allowedTypes = array_merge($allowedTypes, FileUtil::getFiletypesByGroup($filetypeGroup));
             endforeach;
-            $this->setOption('allowedTypes', $filetypeGroups);
         endif;
 
-        $form->_(
-            'file',
-            $datafield->getNameField(),
-            $datafield->getCallingName(),
-            $this->getOptions()
-        );
+        $attributes->setAllowedTypes($allowedTypes);
+        if (AdminUtil::isAdminPage()) :
+            $form->addFilemanager(
+                $datafield->getNameField(),
+                $datafield->getCallingName(),
+                $attributes
+            );
+        else :
+            $form->addFile(
+                $datafield->getNameField(),
+                $datafield->getCallingName(),
+                $attributes
+            );
+        endif;
     }
 }

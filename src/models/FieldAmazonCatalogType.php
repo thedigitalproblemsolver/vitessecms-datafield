@@ -17,6 +17,7 @@ class FieldAmazonCatalogType extends AbstractField
     public function buildItemFormElement(
         AbstractForm $form,
         Datafield $datafield,
+        Attributes $attributes,
         AbstractCollection $data = null
     ) {
         $form->addDropdown(
