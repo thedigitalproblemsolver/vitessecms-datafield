@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace VitesseCms\Datafield\Forms;
 
@@ -7,36 +7,19 @@ use VitesseCms\Core\Utils\FileUtil;
 use VitesseCms\Datafield\Interfaces\AdminformInterface;
 use VitesseCms\Form\AbstractForm;
 use VitesseCms\Form\Helpers\ElementHelper;
+use VitesseCms\Form\Models\Attributes;
 
-/**
- * Class AdminFieldImage
- */
 class AdminFieldImage implements AdminformInterface
 {
-    /**
-     * (@inheritdoc)
-     */
     public static function buildForm(AbstractForm $form, AbstractCollection $item): void
     {
-        $form->_(
-            'text',
-            'Width',
-            'width'
-        );
-        $form->_(
-            'text',
-            'Height',
-            'height'
-        );
-
-        $form->_(
-            'select',
+        $form->addText('Width', 'width')
+            ->addText('Height', 'height')
+            ->addDropdown(
             'Toegestaande bestandstype',
             'allowedFiletypeGroups',
-            [
-                'multiple' => true,
-                'options' => ElementHelper::arrayToSelectOptions(FileUtil::getFiletypeGroups())
-            ]
+                (new Attributes())->setMultiple()
+                    ->setOptions(ElementHelper::arrayToSelectOptions(FileUtil::getFiletypeGroups()))
         );
     }
 }

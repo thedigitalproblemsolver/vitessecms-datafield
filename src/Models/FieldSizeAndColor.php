@@ -80,7 +80,7 @@ class FieldSizeAndColor extends AbstractField
 
             $form->addHtml($form->view->renderTemplate(
                 'adminItemFormSizeAndColor',
-                $form->configuration->getRootDir().'src/field/resources/views/',
+                $form->configuration->getRootDir().'datafirld/src/Resources/views/',
                 $params
             ));
         }
