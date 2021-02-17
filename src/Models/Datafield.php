@@ -48,7 +48,7 @@ class Datafield extends AbstractCollection
     {
         $templates = [];
         $dirs = DirectoryUtil::getChildren(
-            $this->di->config->get('rootDir') . 'template/core/views/fields/'
+            $this->di->config->get('rootDir') . 'template/core/Views/fields/'
         );
         foreach ($dirs as $name => $path) :
             $templates[$path] = strtolower($name);
@@ -130,6 +130,10 @@ class Datafield extends AbstractCollection
     {
         if (substr_count($this->model,'Modules'  )) :
             return str_replace('Modules','VitesseCms',$this->model);
+        endif;
+
+        if (substr_count($this->model,'VitesseCms'  )) :
+            return $this->model;
         endif;
 
         return 'VitesseCms\\Datafield\\Models\\'.$this->model;

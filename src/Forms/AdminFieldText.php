@@ -74,13 +74,10 @@ class AdminFieldText implements AdminformInterface
 
     protected static function addHidden(AbstractForm $form, AbstractCollection $item) : void
     {
-        $form->_(
-            'text',
+        $form->AddText(
             'Default value',
             'defaultValue',
-            [
-                'multilang' => $item->_('multilang')
-            ]
+            (new Attributes())->setMultilang((bool)$item->_('multilang'))
         );
     }
 }

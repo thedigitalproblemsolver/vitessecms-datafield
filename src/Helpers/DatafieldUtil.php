@@ -15,8 +15,8 @@ class DatafieldUtil
         $types = [];
 
         $directories = [
-            'accountdir' => $configService->getAccountDir() . 'src/datafield/models',
-            'verdornamedir' => $configService->getVendorNameDir().'datafield/src/models'
+            'accountdir' => $configService->getAccountDir() . 'src/datafield/Models',
+            'verdornamedir' => $configService->getVendorNameDir().'datafield/src/Models'
         ];
 
         foreach ($directories as $directory) :

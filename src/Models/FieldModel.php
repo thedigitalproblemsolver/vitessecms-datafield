@@ -24,8 +24,8 @@ class FieldModel extends AbstractField
             $model::setFindLimit($datafield->_('displayLimit'));
         endif;
 
-        if ($datafield->getDatagroup() !== null):
-            $model::setFindValue('datagroup', ['$in' => $datafield->getDatagroup()]);
+        if (!empty($datafield->getDatagroup())):
+            $model::setFindValue('datagroup', ['$in' => [$datafield->getDatagroup()]]);
         endif;
 
         $attributes->setOptions(ElementHelper::arrayToSelectOptions($model::findAll()));
