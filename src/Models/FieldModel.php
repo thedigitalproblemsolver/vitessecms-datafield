@@ -12,12 +12,31 @@ use VitesseCms\Media\Enums\AssetsEnum;
 
 class FieldModel extends AbstractField
 {
+    public static function beforeSave(AbstractCollection $item, Datafield $datafield)
+    {
+        $value = $item->_($datafield->getCallingName());
+        if ($value) :
+            if (!is_array($value)) :
+                $object = $datafield->_('model');
+                /** @var AbstractCollection $datafieldItem */
+                $datafieldItem = $object::findById($value);
+                $item->set(
+                    $datafield->getCallingName() . 'Name',
+                    $datafieldItem->getNameField()
+                );
+            endif;
+        else :
+            $item->set($datafield->getCallingName() . 'Name', '');
+        endif;
+    }
+
     public function buildItemFormElement(
         AbstractForm $form,
         Datafield $datafield,
         Attributes $attributes,
         AbstractCollection $data = null
-    ){
+    )
+    {
         $model = $datafield->getModel();
         $model::addFindOrder('name');
         if ($datafield->_('displayLimit') && $datafield->_('displayLimit') > 0):
@@ -39,24 +58,6 @@ class FieldModel extends AbstractField
         endif;
 
         $form->addDropdown($datafield->getNameField(), $datafield->getCallingName(), $attributes);
-    }
-
-    public static function beforeSave(AbstractCollection $item, Datafield $datafield)
-    {
-        $value = $item->_($datafield->getCallingName());
-        if ($value) :
-            if (!is_array($value)) :
-                $object = $datafield->_('model');
-                /** @var AbstractCollection $datafieldItem */
-                $datafieldItem = $object::findById($value);
-                $item->set(
-                    $datafield->getCallingName() . 'Name',
-                    $datafieldItem->getNameField()
-                );
-            endif;
-        else :
-            $item->set($datafield->getCallingName() . 'Name', '');
-        endif;
     }
 
     public function renderSlugPart(AbstractCollection $item, string $languageShort, Datafield $datafield): string

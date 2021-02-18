@@ -17,7 +17,8 @@ class FieldText extends AbstractField
         Datafield $datafield,
         Attributes $attributes,
         AbstractCollection $data = null
-    ) {
+    )
+    {
         switch ($datafield->getInputType()):
             case 'number':
                 $form->addNumber($datafield->getNameField(), $datafield->getCallingName(), $attributes);
@@ -41,8 +42,9 @@ class FieldText extends AbstractField
         AbstractFormInterface $filter,
         Datafield $datafield,
         AbstractCollection $data = null
-    ): void {
-        $fieldName = 'filter['.$datafield->getCallingName().']';
+    ): void
+    {
+        $fieldName = 'filter[' . $datafield->getCallingName() . ']';
         switch ($datafield->_('inputType')) :
             case 'number':
                 $this->di->assets->load(AssetsEnum::SLIDER);
@@ -52,12 +54,12 @@ class FieldText extends AbstractField
                     $datafield->getNameField(),
                     $fieldName,
                     [
-                        'data-slider-id'    => 'silder-'.$datafield->_('calling_name'),
-                        'data-slider-min'   => '0',
-                        'data-slider-max'   => '40',
-                        'data-slider-step'  => '1',
+                        'data-slider-id' => 'silder-' . $datafield->_('calling_name'),
+                        'data-slider-min' => '0',
+                        'data-slider-max' => '40',
+                        'data-slider-step' => '1',
                         'data-slider-value' => '[1,40]',
-                        'inputClass'        => 'slider',
+                        'inputClass' => 'slider',
                     ]
                 );
                 break;
@@ -65,7 +67,7 @@ class FieldText extends AbstractField
                 $filter->_(
                     'hidden',
                     null,
-                    'filter[textFields]['.uniqid('', true).']',
+                    'filter[textFields][' . uniqid('', true) . ']',
                     [
                         'value' => $datafield->getCallingName(),
                     ]

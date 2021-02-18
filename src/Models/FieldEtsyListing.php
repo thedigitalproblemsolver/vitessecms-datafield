@@ -18,7 +18,8 @@ class FieldEtsyListing extends AbstractField
         Datafield $datafield,
         Attributes $attributes,
         AbstractCollection $data = null
-    ) {
+    )
+    {
         $form->addText('Etsy Id', 'etsyId')
             ->addText('Etsy last sync date', 'etsyLastSyncDate', (new Attributes())->setReadonly(true));
 
@@ -26,7 +27,7 @@ class FieldEtsyListing extends AbstractField
             $form->addHtml('<div class="row">
                 <div class="col-xs-12 col-sm-12 col-md-4 col-lg-3 col-xl-3"></div>
                 <div class="col-xs-12 col-sm-12 col-md-8 col-lg-9 col-xl-9">
-                    <a href="'.$this->url->getBaseUri().'etsy/listing/sync/'.$data->getId().'">Create/Update a listing</a>
+                    <a href="' . $this->url->getBaseUri() . 'etsy/listing/sync/' . $data->getId() . '">Create/Update a listing</a>
                 </div>
             </div>'
             );

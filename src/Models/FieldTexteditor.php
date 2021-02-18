@@ -16,7 +16,8 @@ class FieldTexteditor extends AbstractField
         Datafield $datafield,
         Attributes $attributes,
         AbstractCollection $data = null
-    ) {
+    )
+    {
         $form->addEditor($datafield->getNameField(), $datafield->getCallingName(), $attributes);
     }
 
@@ -24,9 +25,10 @@ class FieldTexteditor extends AbstractField
         AbstractFormInterface $filter,
         Datafield $datafield,
         AbstractCollection $data = null
-    ): void {
+    ): void
+    {
         $filter->addHidden(
-            'filter[textFields]['.uniqid('',false).']',
+            'filter[textFields][' . uniqid('', false) . ']',
             (new Attributes())->setDefaultValue($datafield->getCallingName())
         );
     }
@@ -35,9 +37,10 @@ class FieldTexteditor extends AbstractField
         AbstractCollection $item,
         string $languageShort,
         Datafield $datafield
-    ) {
+    )
+    {
         $result = $item->_($datafield->getCallingName(), $languageShort);
-        if(is_string($result)) :
+        if (is_string($result)) :
             return trim(strip_tags($result));
         endif;
 

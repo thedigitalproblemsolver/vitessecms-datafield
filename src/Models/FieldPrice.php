@@ -21,23 +21,45 @@ use Phalcon\Di;
  */
 class FieldPrice extends AbstractField
 {
+    public static function beforeMaincontent(Item $item, Datafield $datafield): void
+    {
+        $item->set(
+            $datafield->getCallingName() . '_saleDisplay',
+            PriceUtil::formatDisplay(
+                (float)$item->_($datafield->getCallingName() . '_sale')
+            )
+        );
+
+        $item->set(
+            $datafield->getCallingName() . 'Display',
+            PriceUtil::formatDisplay(
+                (float)$item->_($datafield->getCallingName())
+            )
+        );
+
+        Di::getDefault()->get('eventsManager')->fire('discount:prepareItem', $item);
+    }
+
+    //TODO move to listener
+
     public function buildItemFormElement(
         AbstractForm $form,
         Datafield $datafield,
         Attributes $attributes,
         AbstractCollection $data = null
-    ) {
+    )
+    {
         $form->addText(
-            $datafield->getNameField().' - ex. VAT',
+            $datafield->getNameField() . ' - ex. VAT',
             $datafield->getCallingName(),
             (new Attributes())->setReadonly()
         )->addNumber(
-            $datafield->getNameField().' - purchase',
-            $datafield->getCallingName().'_purchase',
+            $datafield->getNameField() . ' - purchase',
+            $datafield->getCallingName() . '_purchase',
             (new Attributes())->setMin(0)
         )->addNumber(
-            $datafield->getNameField().' - inc. VAT',
-            $datafield->getCallingName().'_sale',
+            $datafield->getNameField() . ' - inc. VAT',
+            $datafield->getCallingName() . '_sale',
             (new Attributes())->setMin(0)
         );
 
@@ -48,27 +70,6 @@ class FieldPrice extends AbstractField
             (new Attributes())->setInputClass(AssetsEnum::SELECT2)
                 ->setMultiple()
                 ->setOptions(ElementHelper::arrayToSelectOptions(Discount::findAll()))
-            )
-        ;
-    }
-
-    //TODO move to listener
-    public static function beforeMaincontent(Item $item, Datafield $datafield): void
-    {
-        $item->set(
-            $datafield->getCallingName().'_saleDisplay',
-            PriceUtil::formatDisplay(
-                (float)$item->_($datafield->getCallingName().'_sale')
-            )
         );
-
-        $item->set(
-            $datafield->getCallingName().'Display',
-            PriceUtil::formatDisplay(
-                (float)$item->_($datafield->getCallingName())
-            )
-        );
-
-        Di::getDefault()->get('eventsManager')->fire('discount:prepareItem', $item);
     }
 }

@@ -20,10 +20,10 @@ class FieldSizeAndColorEnum extends AbstractEnum
     public const SIZE_ONE = 'One-size';
 
     public const sizes = [
-        'S'   => self::SIZE_S,
-        'M'   => self::SIZE_M,
-        'L'   => self::SIZE_L,
-        'XL'  => self::SIZE_XL,
+        'S' => self::SIZE_S,
+        'M' => self::SIZE_M,
+        'L' => self::SIZE_L,
+        'XL' => self::SIZE_XL,
         'XXL' => self::SIZE_XXL,
         '3XL' => self::SIZE_3XL,
         '4XL' => self::SIZE_4XL,

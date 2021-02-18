@@ -31,6 +31,23 @@ abstract class AbstractField extends AbstractInjectable
     }
 
     /**
+     * @param AbstractCollection $item
+     * @param Datafield $datafield
+     *
+     * @deprecated shpuld be moved to eventListner
+     */
+    public static function beforeSave(AbstractCollection $item, Datafield $datafield)
+    {
+    }
+
+    /**
+     * @deprecated should be moved to eventListner
+     */
+    public static function beforeMaincontent(Item $item, Datafield $datafield): void
+    {
+    }
+
+    /**
      * @param AbstractForm $form
      * @param Datafield $datafield
      * @param AbstractCollection|null $data
@@ -40,7 +57,8 @@ abstract class AbstractField extends AbstractInjectable
         Datafield $datafield,
         Attributes $attributes,
         AbstractCollection $data = null
-    ){
+    )
+    {
     }
 
     /**
@@ -53,7 +71,7 @@ abstract class AbstractField extends AbstractInjectable
     {
         $reflect = new \ReflectionClass($this);
         /** @var AdminformInterface $class */
-        $class = 'VitesseCms\\Datafield\\Forms\\Admin'.$reflect->getShortName();
+        $class = 'VitesseCms\\Datafield\\Forms\\Admin' . $reflect->getShortName();
         if (class_exists($class)) :
             $class::buildForm($form, $item);
         endif;
@@ -80,32 +98,15 @@ abstract class AbstractField extends AbstractInjectable
     }
 
     /**
-     * @param AbstractCollection $item
-     * @param Datafield $datafield
-     *
-     * @deprecated shpuld be moved to eventListner
-     */
-    public static function beforeSave(AbstractCollection $item, Datafield $datafield)
-    {
-    }
-
-    /**
-     * @deprecated should be moved to eventListner
-     */
-    public static function beforeMaincontent(Item $item, Datafield $datafield): void
-    {
-    }
-
-    /**
      * @param Datafield $datafield
      *
      * @return string
      */
     public function getFieldname(Datafield $datafield): string
     {
-        $fieldName = 'filter['.$datafield->_('calling_name').']';
+        $fieldName = 'filter[' . $datafield->_('calling_name') . ']';
         if ($datafield->_('multilang')) :
-            $fieldName = 'filter['.$datafield->_('calling_name').'.'.Di::getDefault()->get('configuration')->getLanguageShort().']';
+            $fieldName = 'filter[' . $datafield->_('calling_name') . '.' . Di::getDefault()->get('configuration')->getLanguageShort() . ']';
         endif;
 
         return $fieldName;
@@ -123,7 +124,8 @@ abstract class AbstractField extends AbstractInjectable
         AbstractCollection $item,
         string $languageShort,
         Datafield $datafield
-    ): string {
+    ): string
+    {
         $slug = $item->_($datafield->_('calling_name'), $languageShort);
         if (is_string($slug)) :
             return Slug::generate($slug);

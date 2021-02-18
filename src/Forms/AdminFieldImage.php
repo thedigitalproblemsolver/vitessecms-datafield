@@ -16,10 +16,10 @@ class AdminFieldImage implements AdminformInterface
         $form->addText('Width', 'width')
             ->addText('Height', 'height')
             ->addDropdown(
-            'Toegestaande bestandstype',
-            'allowedFiletypeGroups',
+                'Toegestaande bestandstype',
+                'allowedFiletypeGroups',
                 (new Attributes())->setMultiple()
                     ->setOptions(ElementHelper::arrayToSelectOptions(FileUtil::getFiletypeGroups()))
-        );
+            );
     }
 }

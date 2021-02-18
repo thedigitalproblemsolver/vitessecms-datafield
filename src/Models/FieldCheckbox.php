@@ -16,7 +16,8 @@ class FieldCheckbox extends AbstractField
         Datafield $datafield,
         Attributes $attributes,
         AbstractCollection $data = null
-    ) {
+    )
+    {
         if (
             is_object($data)
             && $data->_($datafield->getCallingName())

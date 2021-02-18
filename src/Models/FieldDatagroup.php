@@ -23,7 +23,7 @@ class FieldDatagroup extends AbstractField
         if (is_string($test) && MongoUtil::isObjectId($test)) :
             $object = Item::findById($item->_($datafield->getCallingName()));
             if ($object) :
-                $item->set($datafield->getCallingName().'Display', $object);
+                $item->set($datafield->getCallingName() . 'Display', $object);
             endif;
         endif;
     }
@@ -33,7 +33,8 @@ class FieldDatagroup extends AbstractField
         Datafield $datafield,
         Attributes $attributes,
         AbstractCollection $data = null
-    ) {
+    )
+    {
         Item::setFindValue('datagroup', $datafield->getDatagroup());
         if ($datafield->_('itemParent')) :
             Item::setFindValue('parentId', $datafield->_('itemParent'));
@@ -86,7 +87,7 @@ class FieldDatagroup extends AbstractField
 
         $filter->addDropdown(
             $datafield->getNameField(),
-            $this->getFieldname($datafield).'[]',
+            $this->getFieldname($datafield) . '[]',
             (new Attributes())->setMultiple()
                 ->setInputClass(AssetsEnum::SELECT2)
                 ->setNoEmptyText()

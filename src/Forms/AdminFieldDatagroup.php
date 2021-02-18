@@ -33,6 +33,6 @@ class AdminFieldDatagroup implements AdminformInterface
             endif;
         endif;
 
-        $form->addToggle('Multiselect','multiple');
+        $form->addToggle('Multiselect', 'multiple');
     }
 }

@@ -18,7 +18,8 @@ class FieldImage extends AbstractField
         Datafield $datafield,
         Attributes $attributes,
         AbstractCollection $data = null
-    ){
+    )
+    {
         $allowedTypes = [];
         if ($datafield->_('allowedFiletypeGroups')) :
             $allowedTypes = [];

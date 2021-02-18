@@ -18,7 +18,8 @@ class FieldAddtocart extends AbstractField
         Datafield $datafield,
         Attributes $attributes,
         AbstractCollection $data = null
-    ) {
+    )
+    {
         $form->addToggle(
             $datafield->getNameField(),
             $datafield->getCallingName(),

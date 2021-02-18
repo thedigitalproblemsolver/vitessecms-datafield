@@ -14,5 +14,5 @@ interface AdminformInterface
      * @param AbstractForm $form
      * @param AbstractCollection $item
      */
-    public static function buildForm(AbstractForm $form, AbstractCollection $item): void ;
+    public static function buildForm(AbstractForm $form, AbstractCollection $item): void;
 }

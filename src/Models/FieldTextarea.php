@@ -16,7 +16,8 @@ class FieldTextarea extends AbstractField
         Datafield $datafield,
         Attributes $attributes,
         AbstractCollection $data = null
-    ) {
+    )
+    {
         $form->addTextarea($datafield->getNameField(), $datafield->getCallingName(), $attributes);
     }
 
@@ -29,9 +30,10 @@ class FieldTextarea extends AbstractField
         AbstractFormInterface $filter,
         Datafield $datafield,
         AbstractCollection $data = null
-    ): void {
+    ): void
+    {
         $filter->addHidden(
-            'filter[textFields]['.uniqid('', true).']',
+            'filter[textFields][' . uniqid('', true) . ']',
             (new Attributes())->setDefaultValue($datafield->getCallingName())
         );
     }

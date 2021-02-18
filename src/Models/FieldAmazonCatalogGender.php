@@ -19,13 +19,14 @@ class FieldAmazonCatalogGender extends AbstractField
         Datafield $datafield,
         Attributes $attributes,
         AbstractCollection $data = null
-    ) {
+    )
+    {
         $form->addDropdown(
             'Amazon gender',
             'AmazonCatalogGender',
             (new Attributes())->setOptions(ElementHelper::arrayToSelectOptions([
                 'Women' => 'Women',
-                'Men'   => 'Men',
+                'Men' => 'Men',
             ]))
         );
     }

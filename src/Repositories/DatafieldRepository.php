@@ -24,7 +24,8 @@ class DatafieldRepository
     public function findFirst(
         ?FindValueIterator $findValues = null,
         bool $hideUnpublished = true
-    ): ?Datafield {
+    ): ?Datafield
+    {
         Datafield::setFindPublished($hideUnpublished);
         $this->parsefindValues($findValues);
 
@@ -35,15 +36,6 @@ class DatafieldRepository
         endif;
 
         return null;
-    }
-
-    public function findAll(?FindValueIterator $findValues = null, bool $hideUnpublished = true): DatafieldIterator
-    {
-        Datafield::setFindPublished($hideUnpublished);
-        Datafield::addFindOrder('name');
-        $this->parsefindValues($findValues);
-
-        return new DatafieldIterator(Datafield::findAll());
     }
 
     protected function parsefindValues(?FindValueIterator $findValues = null): void
@@ -59,5 +51,14 @@ class DatafieldRepository
                 $findValues->next();
             endwhile;
         endif;
+    }
+
+    public function findAll(?FindValueIterator $findValues = null, bool $hideUnpublished = true): DatafieldIterator
+    {
+        Datafield::setFindPublished($hideUnpublished);
+        Datafield::addFindOrder('name');
+        $this->parsefindValues($findValues);
+
+        return new DatafieldIterator(Datafield::findAll());
     }
 }

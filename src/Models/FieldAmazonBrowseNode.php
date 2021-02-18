@@ -20,9 +20,10 @@ class FieldAmazonBrowseNode extends AbstractField
         Datafield $datafield,
         Attributes $attributes,
         AbstractCollection $data = null
-    ) {
+    )
+    {
         $attributes = new Attributes();
-        if($data !== null) {
+        if ($data !== null) {
             $attributes->setOptions(ElementHelper::arrayToSelectOptions(
                 FieldAmazonEnum::nodes,
                 [$data->_('AmazonBrowseNode')])

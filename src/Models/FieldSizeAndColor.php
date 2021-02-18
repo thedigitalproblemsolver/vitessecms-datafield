@@ -19,79 +19,12 @@ use Phalcon\Tag;
  */
 class FieldSizeAndColor extends AbstractField
 {
-    public function buildItemFormElement(
-        AbstractForm $form,
-        Datafield $datafield,
-        Attributes $attributes,
-        AbstractCollection $data = null
-    ) {
-        if ($data !== null) {
-            $form->assets->load(AssetsEnum::COLORPICKER);
-            $form->assets->load(AssetsEnum::FILEMANAGER);
-            $fieldName = $datafield->getCallingName();
-
-            $dataVariations = $data->_($fieldName);
-            $images = $variations = $colorParsed = [];
-            if (\is_array($dataVariations)) :
-                ksort($dataVariations);
-                foreach ($dataVariations as $key => $variation) :
-                    $variations[] = FieldSizeAndColorFactory::createVariationForm($variation, $fieldName);
-                    if (!isset($colorParsed[$variation['color']])) :
-                        if (!\is_array($variation['image'])) :
-                            $variation['image'] = [$variation['image']];
-                        endif;
-                        foreach ($variation['image'] as $imageKey => $image) :
-                            $images[] = [
-                                'id'    => str_replace('#', '', strtolower($variation['color'])).$imageKey,
-                                'name'  => $fieldName.'_images['.strtolower($variation['color']).'][]',
-                                'color' => strtolower($variation['color']),
-                                'image' => $image,
-                            ];
-                        endforeach;
-                        $images[] = [
-                            'id'    => str_replace('#', '', strtolower($variation['color'])),
-                            'name'  => $fieldName.'_images['.strtolower($variation['color']).'][]',
-                            'color' => strtolower($variation['color']),
-                            'image' => '',
-                        ];
-                        $colorParsed[$variation['color']] = $variation['color'];
-                    endif;
-                endforeach;
-            endif;
-
-            $params = [
-                'sizeAndColorLabel'       => $datafield->getNameField(),
-                'sizeAndColorId'          => uniqid('', false),
-                'sizeAndColorVariations'  => $variations,
-                'sizeAndColorImages'      => $images,
-                'skuBaseElement'          => Tag::textField(['name' => $fieldName.'[__key__][sku]', 'id' => null]),
-                //TODO : zonder @-teken komt er een foutmelding, waarschijnlijk is dit een bug in het Phalcon framework
-                'sizeBaseElement'         => @Tag::select(['name' => $fieldName.'[__key__][size]', 'id' => null],
-                    FieldSizeAndColorEnum::sizes),
-                'colorBaseElement'        => Tag::textField(['name' => $fieldName.'[__key__][color]', 'id' => null]),
-                'stockBaseElement'        => Tag::numericField(['name' => $fieldName.'[__key__][stock]', 'id' => null]),
-                'stockMinimalBaseElement' => Tag::numericField(['name' => $fieldName.'[__key__][stock]', 'id' => null]),
-                'eanBaseElement'          => Tag::numericField([
-                    'name'      => $fieldName.'[__key__][ean]',
-                    'maxlength' => 13,
-                    'id'        => null,
-                ]),
-            ];
-
-            $form->addHtml($form->view->renderTemplate(
-                'adminItemFormSizeAndColor',
-                $form->configuration->getRootDir().'datafirld/src/Resources/views/',
-                $params
-            ));
-        }
-    }
-
     public static function beforeSave(AbstractCollection $item, Datafield $datafield)
     {
         $request = new Request();
         if ($request->get($datafield->getCallingName())) :
             $variations = [];
-            $images = $request->get($datafield->getCallingName().'_images');
+            $images = $request->get($datafield->getCallingName() . '_images');
             foreach ((array)$request->get($datafield->getCallingName()) as $key => $variation) :
                 if ($key !== '__key__') :
                     $variation['image'] = (array)$images[strtolower($variation['color'])];
@@ -135,9 +68,9 @@ class FieldSizeAndColor extends AbstractField
             $aColors = [];
             foreach ($colors as $s => $sku) :
                 $aColors[] = [
-                    'color'      => $s,
-                    'sku'        => implode(',', $sku['sku']),
-                    'image'      => implode(',', $sku['image']),
+                    'color' => $s,
+                    'sku' => implode(',', $sku['sku']),
+                    'image' => implode(',', $sku['image']),
                     'colorClass' => str_replace('#', '', $s),
                 ];
             endforeach;
@@ -147,14 +80,14 @@ class FieldSizeAndColor extends AbstractField
                 if (isset($sizes[$size])) :
                     $aSizes[] = [
                         'size' => $size,
-                        'sku'  => implode(',', $sizes[$size]['sku']),
+                        'sku' => implode(',', $sizes[$size]['sku']),
                     ];
                 endif;
             endforeach;
 
-            $item->set($datafield->getCallingName().'Template', [
+            $item->set($datafield->getCallingName() . 'Template', [
                 'colors' => $aColors,
-                'sizes'  => $aSizes,
+                'sizes' => $aSizes,
             ]);
 
             if ($inStock === 0) :
@@ -169,16 +102,85 @@ class FieldSizeAndColor extends AbstractField
         endif;
     }
 
+    public function buildItemFormElement(
+        AbstractForm $form,
+        Datafield $datafield,
+        Attributes $attributes,
+        AbstractCollection $data = null
+    )
+    {
+        if ($data !== null) {
+            $form->assets->load(AssetsEnum::COLORPICKER);
+            $form->assets->load(AssetsEnum::FILEMANAGER);
+            $fieldName = $datafield->getCallingName();
+
+            $dataVariations = $data->_($fieldName);
+            $images = $variations = $colorParsed = [];
+            if (\is_array($dataVariations)) :
+                ksort($dataVariations);
+                foreach ($dataVariations as $key => $variation) :
+                    $variations[] = FieldSizeAndColorFactory::createVariationForm($variation, $fieldName);
+                    if (!isset($colorParsed[$variation['color']])) :
+                        if (!\is_array($variation['image'])) :
+                            $variation['image'] = [$variation['image']];
+                        endif;
+                        foreach ($variation['image'] as $imageKey => $image) :
+                            $images[] = [
+                                'id' => str_replace('#', '', strtolower($variation['color'])) . $imageKey,
+                                'name' => $fieldName . '_images[' . strtolower($variation['color']) . '][]',
+                                'color' => strtolower($variation['color']),
+                                'image' => $image,
+                            ];
+                        endforeach;
+                        $images[] = [
+                            'id' => str_replace('#', '', strtolower($variation['color'])),
+                            'name' => $fieldName . '_images[' . strtolower($variation['color']) . '][]',
+                            'color' => strtolower($variation['color']),
+                            'image' => '',
+                        ];
+                        $colorParsed[$variation['color']] = $variation['color'];
+                    endif;
+                endforeach;
+            endif;
+
+            $params = [
+                'sizeAndColorLabel' => $datafield->getNameField(),
+                'sizeAndColorId' => uniqid('', false),
+                'sizeAndColorVariations' => $variations,
+                'sizeAndColorImages' => $images,
+                'skuBaseElement' => Tag::textField(['name' => $fieldName . '[__key__][sku]', 'id' => null]),
+                //TODO : zonder @-teken komt er een foutmelding, waarschijnlijk is dit een bug in het Phalcon framework
+                'sizeBaseElement' => @Tag::select(['name' => $fieldName . '[__key__][size]', 'id' => null],
+                    FieldSizeAndColorEnum::sizes),
+                'colorBaseElement' => Tag::textField(['name' => $fieldName . '[__key__][color]', 'id' => null]),
+                'stockBaseElement' => Tag::numericField(['name' => $fieldName . '[__key__][stock]', 'id' => null]),
+                'stockMinimalBaseElement' => Tag::numericField(['name' => $fieldName . '[__key__][stock]', 'id' => null]),
+                'eanBaseElement' => Tag::numericField([
+                    'name' => $fieldName . '[__key__][ean]',
+                    'maxlength' => 13,
+                    'id' => null,
+                ]),
+            ];
+
+            $form->addHtml($form->view->renderTemplate(
+                'adminItemFormSizeAndColor',
+                $form->configuration->getRootDir() . 'datafirld/src/Resources/views/',
+                $params
+            ));
+        }
+    }
+
     public function renderFilter(
         AbstractFormInterface $filter,
         Datafield $datafield,
         AbstractCollection $data = null
-    ): void {
+    ): void
+    {
         $options = [];
         foreach (FieldSizeAndColorEnum::sizes as $key => $label) :
             $options[] = [
-                'value'    => $key,
-                'label'    => $label,
+                'value' => $key,
+                'label' => $label,
                 'selected' => false,
             ];
         endforeach;

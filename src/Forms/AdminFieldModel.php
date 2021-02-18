@@ -24,11 +24,10 @@ class AdminFieldModel implements AdminformInterface
                 ->setOptions(ElementHelper::arrayToSelectOptions(
                     SystemUtil::getModels(true)
                 ))
-            )
+        )
             ->addNumber('Display limit', 'displayLimit')
             ->addToggle('use Select2', 'useSelect2')
-            ->addToggle('Select multiple', 'multiple')
-        ;
+            ->addToggle('Select multiple', 'multiple');
 
         switch ($item->_('model')) :
             case Item::class:

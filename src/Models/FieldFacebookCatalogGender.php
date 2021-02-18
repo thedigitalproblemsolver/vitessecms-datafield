@@ -19,13 +19,14 @@ class FieldFacebookCatalogGender extends AbstractField
         Datafield $datafield,
         Attributes $attributes,
         AbstractCollection $data = null
-    ) {
+    )
+    {
         $form->addDropdown(
             'Facebook gender',
             'FacebookCatalogGender',
             $attributes->setOptions(ElementHelper::arrayToSelectOptions([
                 'female' => 'female',
-                'male'   => 'male',
+                'male' => 'male',
                 'unisex' => 'unisex',
             ]))
         );

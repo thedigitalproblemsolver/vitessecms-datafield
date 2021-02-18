@@ -39,8 +39,8 @@ class Datafield extends AbstractCollection
     {
         parent::afterFetch();
 
-        if($this->type !== null):
-            $this->type = str_replace('\\Field\\','\\Datafield\\',$this->type);
+        if ($this->type !== null):
+            $this->type = str_replace('\\Field\\', '\\Datafield\\', $this->type);
         endif;
     }
 
@@ -57,21 +57,34 @@ class Datafield extends AbstractCollection
         return $templates;
     }
 
-    public function renderFilter(AbstractFormInterface $filter ): void
+    public function renderFilter(AbstractFormInterface $filter): void
     {
         $object = $this->getClass($this->_('type'));
         /** @noinspection PhpUndefinedMethodInspection */
         (new $object())->renderFilter($filter, $this);
     }
 
-    public function renderAdminlistFilter(AbstractFormInterface $filter ): void
+    public function getClass(): string
+    {
+        if (substr_count($this->type, 'Modules')) :
+            return str_replace('Modules', 'VitesseCms', $this->type);
+        endif;
+
+        if (substr_count($this->type, 'VitesseCms')) :
+            return $this->type;
+        endif;
+
+        return 'VitesseCms\\Datafield\\Models\\' . $this->type;
+    }
+
+    public function renderAdminlistFilter(AbstractFormInterface $filter): void
     {
         $object = $this->getClass($this->_('type'));
         /** @noinspection PhpUndefinedMethodInspection */
         (new $object())->renderAdminlistFilter($filter, $this);
     }
 
-    public function getSlugPart(AbstractCollection $item, string $languageShort) : string
+    public function getSlugPart(AbstractCollection $item, string $languageShort): string
     {
         $object = $this->getClass($this->_('type'));
         /** @noinspection PhpUndefinedMethodInspection */
@@ -87,7 +100,7 @@ class Datafield extends AbstractCollection
 
     public function getCallingName(): string
     {
-        return $this->calling_name??'';
+        return $this->calling_name ?? '';
     }
 
     public function isMultilang(): bool
@@ -107,35 +120,22 @@ class Datafield extends AbstractCollection
 
     public function getFieldType(): ?string
     {
-        if(!empty($this->type)) {
-            return array_reverse(explode('\\',$this->type))[0];
+        if (!empty($this->type)) {
+            return array_reverse(explode('\\', $this->type))[0];
         }
         return null;
     }
 
-    public function getClass(): string
-    {
-        if (substr_count($this->type,'Modules'  )) :
-            return str_replace('Modules','VitesseCms',$this->type);
-        endif;
-
-        if (substr_count($this->type,'VitesseCms'  )) :
-            return $this->type;
-        endif;
-
-        return 'VitesseCms\\Datafield\\Models\\'.$this->type;
-    }
-
     public function getModel(): string
     {
-        if (substr_count($this->model,'Modules'  )) :
-            return str_replace('Modules','VitesseCms',$this->model);
+        if (substr_count($this->model, 'Modules')) :
+            return str_replace('Modules', 'VitesseCms', $this->model);
         endif;
 
-        if (substr_count($this->model,'VitesseCms'  )) :
+        if (substr_count($this->model, 'VitesseCms')) :
             return $this->model;
         endif;
 
-        return 'VitesseCms\\Datafield\\Models\\'.$this->model;
+        return 'VitesseCms\\Datafield\\Models\\' . $this->model;
     }
 }

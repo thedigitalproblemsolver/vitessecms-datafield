@@ -22,7 +22,7 @@ class DataFieldForm extends AbstractForm
             (new Attributes())->setRequired()
         )->addToggle('%ADMIN_MULTILINGUAL%', 'multilang');
 
-        if( $item !== null && $item->getFieldType() !== null ) :
+        if ($item !== null && $item->getFieldType() !== null) :
             $object = $item->getClass();
             (new $object())->buildAdminForm($this, $item);
         endif;

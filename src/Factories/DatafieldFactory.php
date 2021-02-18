@@ -26,7 +26,7 @@ class DatafieldFactory
         array $datafieldSettings = [],
         bool $published = false,
         int $ordering = 0
-    ) : Datafield
+    ): Datafield
     {
         $datafield = new Datafield();
         $datafield->set('name', $title, true);

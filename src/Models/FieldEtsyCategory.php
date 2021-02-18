@@ -19,14 +19,15 @@ class FieldEtsyCategory extends AbstractField
         Datafield $datafield,
         Attributes $attributes,
         AbstractCollection $data = null
-    ) {
+    )
+    {
         $form->addText('Etsy CategoryId', 'etsyCategoryId')
             ->addText('Etsy TaxanomyId', 'etsyTaxonomyId')
             ->addText('Etsy Tags', 'etsyTags', (new Attributes())->setMultilang(true))
             ->addText('Etsy SizeId', 'etsySizeId');
 
         foreach (FieldSizeAndColorEnum::sizes as $size => $sizeName) :
-            $form->addText($size.' to Etsy Size', 'etsySizeMapper['.$size.']');
+            $form->addText($size . ' to Etsy Size', 'etsySizeMapper[' . $size . ']');
         endforeach;
     }
 }
