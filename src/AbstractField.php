@@ -31,16 +31,6 @@ abstract class AbstractField extends AbstractInjectable
     }
 
     /**
-     * @param AbstractCollection $item
-     * @param Datafield $datafield
-     *
-     * @deprecated shpuld be moved to eventListner
-     */
-    public static function beforeSave(AbstractCollection $item, Datafield $datafield)
-    {
-    }
-
-    /**
      * @deprecated should be moved to eventListner
      */
     public static function beforeMaincontent(Item $item, Datafield $datafield): void
