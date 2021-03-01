@@ -13,7 +13,7 @@ class FieldModelListener
         $value = $item->_($datafield->getCallingName());
         if ($value) :
             if (!is_array($value)) :
-                $object = $datafield->_('model');
+                $object = $datafield->getModel();
                 /** @var AbstractCollection $datafieldItem */
                 $datafieldItem = $object::findById($value);
                 $item->set(

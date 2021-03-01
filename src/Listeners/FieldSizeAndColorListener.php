@@ -11,7 +11,7 @@ use VitesseCms\Datafield\Models\Datafield;
 /**
  * @deprecated move to shop
  */
-class FieldSizeAndColor
+class FieldSizeAndColorListener
 {
     public function beforeSave(Event $event, AbstractCollection $item, Datafield $datafield): void
     {
