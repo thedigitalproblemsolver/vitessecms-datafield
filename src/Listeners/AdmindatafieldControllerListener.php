@@ -10,11 +10,7 @@ use VitesseCms\Form\Models\Attributes;
 
 class AdmindatafieldControllerListener
 {
-    public function adminListFilter(
-        Event $event,
-        AbstractAdminController $controller,
-        AdminlistFormInterface $form
-    ): string
+    public function adminListFilter(Event $event, AbstractAdminController $controller, AdminlistFormInterface $form): string
     {
         $form->addNameField($form);
         $form->addPublishedField($form);
@@ -24,4 +20,6 @@ class AdmindatafieldControllerListener
             'adminFilter'
         );
     }
+
+
 }
