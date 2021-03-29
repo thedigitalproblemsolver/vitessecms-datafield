@@ -32,6 +32,12 @@ class FieldText extends AbstractField
             case 'url':
                 $form->addUrl($datafield->getNameField(), $datafield->getCallingName(), $attributes);
                 break;
+            case 'email':
+                $form->addEmail($datafield->getNameField(), $datafield->getCallingName(), $attributes);
+                break;
+            case 'hidden':
+                $form->addHidden($datafield->getCallingName());
+                break;
             default:
                 var_dump($datafield->getInputType());
                 die();
