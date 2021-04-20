@@ -2,6 +2,8 @@
 
 namespace VitesseCms\Datafield;
 
+use Phalcon\Exception;
+use ReflectionClass;
 use VitesseCms\Core\Helpers\InjectableHelper;
 use VitesseCms\Database\AbstractCollection;
 use VitesseCms\Content\Models\Item;
@@ -59,7 +61,7 @@ abstract class AbstractField extends AbstractInjectable
      */
     public function buildAdminForm(DataFieldForm $form, AbstractCollection $item)
     {
-        $reflect = new \ReflectionClass($this);
+        $reflect = new ReflectionClass($this);
         /** @var AdminformInterface $class */
         $class = 'VitesseCms\\Datafield\\Forms\\Admin' . $reflect->getShortName();
         if (class_exists($class)) :
@@ -108,7 +110,7 @@ abstract class AbstractField extends AbstractInjectable
      * @param Datafield $datafield
      *
      * @return string
-     * @throws \Phalcon\Exception
+     * @throws Exception
      */
     public function renderSlugPart(
         AbstractCollection $item,

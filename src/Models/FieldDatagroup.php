@@ -14,6 +14,7 @@ use VitesseCms\Form\Interfaces\AbstractFormInterface;
 use Phalcon\Utils\Slug;
 use VitesseCms\Form\Models\Attributes;
 use VitesseCms\Media\Enums\AssetsEnum;
+use function is_string;
 
 class FieldDatagroup extends AbstractField
 {
@@ -115,7 +116,7 @@ class FieldDatagroup extends AbstractField
         $datagroupItem = Item::findById($item->_($datafield->_('calling_name')));
         if ($datagroupItem) :
             $slug = $datagroupItem->_('slug', $languageShort);
-            if (\is_string($slug)) :
+            if (is_string($slug)) :
                 return Slug::generate($slug);
             endif;
         endif;
