@@ -59,33 +59,28 @@ class Datafield extends AbstractCollection
 
     public function renderFilter(AbstractFormInterface $filter): void
     {
-        $object = $this->getClass($this->_('type'));
+        $object = $this->getType();
         /** @noinspection PhpUndefinedMethodInspection */
         (new $object())->renderFilter($filter, $this);
     }
 
-    public function getClass(): string
-    {
-        return 'VitesseCms\\Datafield\\Models\\' . $this->type;
-    }
-
     public function renderAdminlistFilter(AbstractFormInterface $filter): void
     {
-        $object = $this->getClass($this->_('type'));
+        $object = $this->getType();
         /** @noinspection PhpUndefinedMethodInspection */
         (new $object())->renderAdminlistFilter($filter, $this);
     }
 
     public function getSlugPart(AbstractCollection $item, string $languageShort): string
     {
-        $object = $this->getClass($this->_('type'));
+        $object = $this->getType();
         /** @noinspection PhpUndefinedMethodInspection */
         return (new $object())->renderSlugPart($item, $languageShort, $this);
     }
 
     public function getSearchValue(AbstractCollection $item, string $languageShort)
     {
-        $object = $this->getClass($this->_('type'));
+        $object = $this->getType();
         /** @noinspection PhpUndefinedMethodInspection */
         return (new $object())->getSearchValue($item, $languageShort, $this);
     }
