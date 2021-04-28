@@ -13,6 +13,8 @@ use VitesseCms\Form\Models\Attributes;
 use VitesseCms\Media\Enums\AssetsEnum;
 use Phalcon\Http\Request;
 use Phalcon\Tag;
+use function in_array;
+use function is_array;
 
 /**
  * @deprecated move to shop
@@ -33,12 +35,12 @@ class FieldSizeAndColor extends AbstractField
 
             $dataVariations = $data->_($fieldName);
             $images = $variations = $colorParsed = [];
-            if (\is_array($dataVariations)) :
+            if (is_array($dataVariations)) :
                 ksort($dataVariations);
                 foreach ($dataVariations as $key => $variation) :
                     $variations[] = FieldSizeAndColorFactory::createVariationForm($variation, $fieldName);
                     if (!isset($colorParsed[$variation['color']])) :
-                        if (!\is_array($variation['image'])) :
+                        if (!is_array($variation['image'])) :
                             $variation['image'] = [$variation['image']];
                         endif;
                         foreach ($variation['image'] as $imageKey => $image) :
@@ -119,7 +121,7 @@ class FieldSizeAndColor extends AbstractField
         $searchValues = [];
         if (is_array($item->_($datafield->getCallingName()))) :
             foreach ($item->_($datafield->getCallingName()) as $variation) :
-                if ($variation['stock'] > 0 && !\in_array($variation['size'], $searchValues, true)) :
+                if ($variation['stock'] > 0 && !in_array($variation['size'], $searchValues, true)) :
                     $searchValues[] = $variation['size'];
                 endif;
             endforeach;

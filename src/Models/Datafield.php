@@ -59,41 +59,28 @@ class Datafield extends AbstractCollection
 
     public function renderFilter(AbstractFormInterface $filter): void
     {
-        $object = $this->getClass($this->_('type'));
+        $object = $this->getType();
         /** @noinspection PhpUndefinedMethodInspection */
         (new $object())->renderFilter($filter, $this);
     }
 
-    public function getClass(): string
-    {
-        if (substr_count($this->type, 'Modules')) :
-            return str_replace('Modules', 'VitesseCms', $this->type);
-        endif;
-
-        if (substr_count($this->type, 'VitesseCms')) :
-            return $this->type;
-        endif;
-
-        return 'VitesseCms\\Datafield\\Models\\' . $this->type;
-    }
-
     public function renderAdminlistFilter(AbstractFormInterface $filter): void
     {
-        $object = $this->getClass($this->_('type'));
+        $object = $this->getType();
         /** @noinspection PhpUndefinedMethodInspection */
         (new $object())->renderAdminlistFilter($filter, $this);
     }
 
     public function getSlugPart(AbstractCollection $item, string $languageShort): string
     {
-        $object = $this->getClass($this->_('type'));
+        $object = $this->getType();
         /** @noinspection PhpUndefinedMethodInspection */
         return (new $object())->renderSlugPart($item, $languageShort, $this);
     }
 
     public function getSearchValue(AbstractCollection $item, string $languageShort)
     {
-        $object = $this->getClass($this->_('type'));
+        $object = $this->getType();
         /** @noinspection PhpUndefinedMethodInspection */
         return (new $object())->getSearchValue($item, $languageShort, $this);
     }
@@ -126,16 +113,26 @@ class Datafield extends AbstractCollection
         return null;
     }
 
-    public function getModel(): string
+    public function getType(): string
     {
-        if (substr_count($this->model, 'Modules')) :
-            return str_replace('Modules', 'VitesseCms', $this->model);
-        endif;
+        return $this->type;
+    }
 
-        if (substr_count($this->model, 'VitesseCms')) :
-            return $this->model;
-        endif;
+    public function setType(string $type): Datafield
+    {
+        $this->type = $type;
+        return $this;
+    }
 
-        return 'VitesseCms\\Datafield\\Models\\' . $this->model;
+    public function getModel(): ?string
+    {
+        return $this->model;
+    }
+
+    public function setModel(string $model): Datafield
+    {
+        $this->model = $model;
+
+        return $this;
     }
 }

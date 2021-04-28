@@ -2,7 +2,7 @@
 
 namespace VitesseCms\Datafield\Models;
 
-use \ArrayIterator;
+use ArrayIterator;
 
 class DatafieldIterator extends ArrayIterator
 {
