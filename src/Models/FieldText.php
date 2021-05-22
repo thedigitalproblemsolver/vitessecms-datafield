@@ -53,7 +53,7 @@ class FieldText extends AbstractField
         $fieldName = 'filter[' . $datafield->getCallingName() . ']';
         switch ($datafield->_('inputType')) :
             case 'number':
-                $this->di->assets->load(AssetsEnum::SLIDER);
+                $this->di->assets->loadSlider();
                 $fieldName = str_replace('filter[', 'filter[range][', $fieldName);
                 $filter->_(
                     'text',
