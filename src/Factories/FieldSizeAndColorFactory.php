@@ -1,9 +1,9 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace VitesseCms\Datafield\Factories;
 
-use VitesseCms\Datafield\Enums\FieldSizeAndColorEnum;
 use Phalcon\Tag;
+use VitesseCms\Shop\Enums\SizeAndColorEnum;
 
 /**
  * Class FieldSizeAndColorFactory
@@ -34,7 +34,7 @@ class FieldSizeAndColorFactory
             'id' => 'SizeAndColor_size_' . $key,
             'value' => $variation['size'],
         ],
-            FieldSizeAndColorEnum::sizes);
+            SizeAndColorEnum::sizes);
         $elements['colorElement'] = Tag::textField([
             'required' => 'required',
             'name' => $fieldName . '[' . $key . '][color]',

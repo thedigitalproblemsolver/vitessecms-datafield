@@ -5,8 +5,8 @@ namespace VitesseCms\Datafield\Listeners;
 use Phalcon\Events\Event;
 use Phalcon\Http\Request;
 use VitesseCms\Database\AbstractCollection;
-use VitesseCms\Datafield\Enums\FieldSizeAndColorEnum;
 use VitesseCms\Datafield\Models\Datafield;
+use VitesseCms\Shop\Enums\SizeAndColorEnum;
 
 /**
  * @deprecated move to shop
@@ -70,7 +70,7 @@ class FieldSizeAndColorListener
             endforeach;
 
             $aSizes = [];
-            foreach (FieldSizeAndColorEnum::sizes as $size => $sizeName) :
+            foreach (SizeAndColorEnum::sizes as $size => $sizeName) :
                 if (isset($sizes[$size])) :
                     $aSizes[] = [
                         'size' => $size,

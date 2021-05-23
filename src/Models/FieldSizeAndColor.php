@@ -5,14 +5,13 @@ namespace VitesseCms\Datafield\Models;
 use VitesseCms\Datafield\Models\Datafield;
 use VitesseCms\Database\AbstractCollection;
 use VitesseCms\Datafield\AbstractField;
-use VitesseCms\Datafield\Enums\FieldSizeAndColorEnum;
 use VitesseCms\Datafield\Factories\FieldSizeAndColorFactory;
 use VitesseCms\Form\AbstractForm;
 use VitesseCms\Form\Interfaces\AbstractFormInterface;
 use VitesseCms\Form\Models\Attributes;
 use VitesseCms\Media\Enums\AssetsEnum;
-use Phalcon\Http\Request;
 use Phalcon\Tag;
+use VitesseCms\Shop\Enums\SizeAndColorEnum;
 use function in_array;
 use function is_array;
 
@@ -70,7 +69,7 @@ class FieldSizeAndColor extends AbstractField
                 'skuBaseElement' => Tag::textField(['name' => $fieldName . '[__key__][sku]', 'id' => null]),
                 //TODO : zonder @-teken komt er een foutmelding, waarschijnlijk is dit een bug in het Phalcon framework
                 'sizeBaseElement' => @Tag::select(['name' => $fieldName . '[__key__][size]', 'id' => null],
-                    FieldSizeAndColorEnum::sizes),
+                    SizeAndColorEnum::sizes),
                 'colorBaseElement' => Tag::textField(['name' => $fieldName . '[__key__][color]', 'id' => null]),
                 'stockBaseElement' => Tag::numericField(['name' => $fieldName . '[__key__][stock]', 'id' => null]),
                 'stockMinimalBaseElement' => Tag::numericField(['name' => $fieldName . '[__key__][stock]', 'id' => null]),
@@ -96,7 +95,7 @@ class FieldSizeAndColor extends AbstractField
     ): void
     {
         $options = [];
-        foreach (FieldSizeAndColorEnum::sizes as $key => $label) :
+        foreach (SizeAndColorEnum::sizes as $key => $label) :
             $options[] = [
                 'value' => $key,
                 'label' => $label,
