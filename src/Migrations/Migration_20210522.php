@@ -37,23 +37,25 @@ class Migration_20210522 implements MigrationInterface
         $result = true;
         $datafields = $this->repository->datafield->findAll(null, false);
         $search = [
-            'Modules\Datafield\Models\FieldAddtocart',
-            'Modules\Datafield\Models\FieldAmazonBrowseNode',
-            'Modules\Datafield\Models\FieldAmazonCatalogGender',
-            'Modules\Datafield\Models\FieldAmazonCatalogType',
+            'VitesseCms\Datafield\Models\FieldAddtocart',
+            'VitesseCms\Datafield\Models\FieldAmazonBrowseNode',
+            'VitesseCms\Datafield\Models\FieldAmazonCatalogGender',
+            'VitesseCms\Datafield\Models\FieldAmazonCatalogType',
+            'VitesseCms\Datafield\Models\FieldCheckbox',
         ];
         $replace = [
             'VitesseCms\Shop\Fields\ShopAddToCart',
             'VitesseCms\Shop\Fields\AmazonBrowseNode',
             'VitesseCms\Shop\Fields\AmazonCatalogGender',
             'VitesseCms\Shop\Fields\AmazonCatalogType',
+            'VitesseCms\Content\Fields\Toggle',
         ];
         while ($datafields->valid()):
             $datafield = $datafields->current();
             $type = str_replace($search,$replace,$datafield->getType());
             if(substr_count($type,'VitesseCms\Datafield\Models') === 1 ):
                 $result = false;
-                $terminalService->printError('Wrong type "'.str_replace($search,$replace,$datafield->getType()).'" for datafield '.$datafield->getNameField());
+                $terminalService->printError('Wrong type "'.str_replace($search,$replace,$datafield->getType()).'" for datafield "'.$datafield->getNameField().'"');
             else :
                 $datafield->setType($type)->save();
             endif;
