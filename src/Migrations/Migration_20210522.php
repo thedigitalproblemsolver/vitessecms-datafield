@@ -53,6 +53,9 @@ class Migration_20210522 implements MigrationInterface
             'VitesseCms\Datafield\Models\FieldText',
             'VitesseCms\Datafield\Models\text',
             'VitesseCms\Datafield\Models\FieldTextarea',
+            'VitesseCms\Datafield\Models\FieldTexteditor',
+            'VitesseCms\Content\Fields\Textarea',
+            'VitesseCms\Content\Fields\Texteditor',
         ];
         $replace = [
             'VitesseCms\Shop\Fields\ShopAddToCart',
@@ -70,7 +73,10 @@ class Migration_20210522 implements MigrationInterface
             'VitesseCms\Shop\Fields\ShopSizeAndColor',
             'VitesseCms\Content\Fields\Text',
             'VitesseCms\Content\Fields\Text',
-            'VitesseCms\Content\Fields\Textarea',
+            'VitesseCms\Content\Fields\TextArea',
+            'VitesseCms\Content\Fields\TextEditor',
+            'VitesseCms\Content\Fields\TextArea',
+            'VitesseCms\Content\Fields\TextEditor',
         ];
         while ($datafields->valid()):
             $datafield = $datafields->current();
