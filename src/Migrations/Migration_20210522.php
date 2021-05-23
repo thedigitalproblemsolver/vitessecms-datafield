@@ -37,10 +37,12 @@ class Migration_20210522 implements MigrationInterface
         $result = true;
         $datafields = $this->repository->datafield->findAll(null, false);
         $search = [
-            'Modules\Datafield\Models\FieldAddtocart'
+            'Modules\Datafield\Models\FieldAddtocart',
+            'Modules\Datafield\Models\FieldAmazonBrowseNode',
         ];
         $replace = [
-            'VitesseCms\Shop\Fields\ShopAddToCart'
+            'VitesseCms\Shop\Fields\ShopAddToCart',
+            'VitesseCms\Shop\Fields\AmazonBrowseNode',
         ];
         while ($datafields->valid()):
             $datafield = $datafields->current();
