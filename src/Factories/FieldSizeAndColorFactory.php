@@ -7,6 +7,7 @@ use VitesseCms\Shop\Enums\SizeAndColorEnum;
 
 /**
  * Class FieldSizeAndColorFactory
+ * @deprecated move to shop
  */
 class FieldSizeAndColorFactory
 {
