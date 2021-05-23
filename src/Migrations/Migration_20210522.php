@@ -49,6 +49,7 @@ class Migration_20210522 implements MigrationInterface
             'VitesseCms\Datafield\Models\FieldImage',
             'VitesseCms\Datafield\Models\FieldModel',
             'VitesseCms\Datafield\Models\FieldPrice',
+            'VitesseCms\Datafield\Models\FieldSizeAndColor',
         ];
         $replace = [
             'VitesseCms\Shop\Fields\ShopAddToCart',
@@ -62,7 +63,8 @@ class Migration_20210522 implements MigrationInterface
             'VitesseCms\Shop\Fields\FacebookCatalogGender',
             'VitesseCms\Media\Fields\Image',
             'VitesseCms\Content\Fields\Model',
-            'VitesseCms\Shop\Fields\Price',
+            'VitesseCms\Shop\Fields\ShopPrice',
+            'VitesseCms\Shop\Fields\ShopSizeAndColor',
         ];
         while ($datafields->valid()):
             $datafield = $datafields->current();
