@@ -35,15 +35,6 @@ class Datafield extends AbstractCollection
      */
     public $inputType;
 
-    public function afterFetch()
-    {
-        parent::afterFetch();
-
-        if ($this->type !== null):
-            $this->type = str_replace('\\Field\\', '\\Datafield\\', $this->type);
-        endif;
-    }
-
     public function getTemplates(): array
     {
         $templates = [];
