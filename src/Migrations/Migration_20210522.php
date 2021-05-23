@@ -39,10 +39,12 @@ class Migration_20210522 implements MigrationInterface
         $search = [
             'Modules\Datafield\Models\FieldAddtocart',
             'Modules\Datafield\Models\FieldAmazonBrowseNode',
+            'Modules\Datafield\Models\FieldAmazonCatalogGender',
         ];
         $replace = [
             'VitesseCms\Shop\Fields\ShopAddToCart',
             'VitesseCms\Shop\Fields\AmazonBrowseNode',
+            'VitesseCms\Shop\Fields\AmazonCatalogGender',
         ];
         while ($datafields->valid()):
             $datafield = $datafields->current();
