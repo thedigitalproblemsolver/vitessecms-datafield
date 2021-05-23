@@ -50,7 +50,7 @@ class Migration_20210422 implements MigrationInterface
             if(substr_count($type,'VitesseCms\Datafield\Models') === 1 ):
                 $datafield->setType($type)->save();
             else :
-                $terminalService->printError('srong type "'.str_replace($search,$replace,$datafield->getType()).'" for datafiel '.$datafield->getNameField());
+                $terminalService->printError('Wrong type "'.str_replace($search,$replace,$datafield->getType()).'" for datafield "'.$datafield->getNameField().'"');
             endif;
             $datafields->next();
         endwhile;
