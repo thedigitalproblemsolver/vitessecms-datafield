@@ -58,7 +58,7 @@ abstract class AbstractField extends AbstractInjectable
     {
         $reflect = new ReflectionClass($this);
         /** @var AdminformInterface $class */
-        $class = 'VitesseCms\\Datafield\\Forms\\Admin' . $reflect->getShortName();
+        $class = 'VitesseCms\\Datafield\\Forms\\AdminField' . $reflect->getShortName();
         if (class_exists($class)) :
             $class::buildForm($form, $item);
         endif;
