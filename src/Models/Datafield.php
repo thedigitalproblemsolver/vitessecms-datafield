@@ -96,14 +96,6 @@ class Datafield extends AbstractCollection
         return $this->inputType;
     }
 
-    public function getFieldType(): ?string
-    {
-        if (!empty($this->type)) {
-            return array_reverse(explode('\\', $this->type))[0];
-        }
-        return null;
-    }
-
     public function getType(): ?string
     {
         return $this->type;
