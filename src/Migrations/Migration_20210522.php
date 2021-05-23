@@ -44,6 +44,7 @@ class Migration_20210522 implements MigrationInterface
             'VitesseCms\Datafield\Models\FieldCheckbox',
             'VitesseCms\Datafield\Models\FieldDatagroup',
             'VitesseCms\Datafield\Models\FieldEtsyCategory',
+            'VitesseCms\Datafield\Models\FieldEtsyListing',
         ];
         $replace = [
             'VitesseCms\Shop\Fields\ShopAddToCart',
@@ -53,6 +54,7 @@ class Migration_20210522 implements MigrationInterface
             'VitesseCms\Content\Fields\Toggle',
             'VitesseCms\Datagroup\Fields\Datagroup',
             'VitesseCms\Etsy\Fields\EtsyCategory',
+            'VitesseCms\Etsy\Fields\EtsyListing',
         ];
         while ($datafields->valid()):
             $datafield = $datafields->current();
