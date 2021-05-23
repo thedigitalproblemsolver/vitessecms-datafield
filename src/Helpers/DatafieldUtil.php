@@ -9,27 +9,26 @@ use VitesseCms\Core\Utils\SystemUtil;
 
 class DatafieldUtil
 {
-    public static function getTypes(ConfigService $configService): array
+    //TODO merge with blocksUtil?
+    public static function getTypes(array $modules, string $postPath): array
     {
         $files = [];
         $types = [];
 
-        $directories = [
-            'accountdir' => $configService->getAccountDir() . 'src/datafield/Models',
-            'verdornamedir' => $configService->getVendorNameDir() . 'datafield/src/Models'
-        ];
-
-        foreach ($directories as $directory) :
+        foreach ($modules as $directory) :
+            $directory .= $postPath;
             $files = array_merge($files, DirectoryUtil::getFilelist($directory));
         endforeach;
-        ksort($files);
 
         foreach ($files as $path => $file) :
             $name = FileUtil::getName($file);
             $className = SystemUtil::createNamespaceFromPath($path);
-            $types[$className] = substr($name, 5, strlen($name));
+            $types[$className] = $name;
         endforeach;
 
-        return $types;
+        $types = array_flip($types);
+        ksort($types);
+
+        return array_flip($types);
     }
 }

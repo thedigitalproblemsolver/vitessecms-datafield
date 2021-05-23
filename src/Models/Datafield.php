@@ -113,7 +113,7 @@ class Datafield extends AbstractCollection
         return null;
     }
 
-    public function getType(): string
+    public function getType(): ?string
     {
         return $this->type;
     }
