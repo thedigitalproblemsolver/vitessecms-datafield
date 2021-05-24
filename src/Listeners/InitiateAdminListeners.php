@@ -4,6 +4,8 @@ namespace VitesseCms\Datafield\Listeners;
 
 use Phalcon\Events\Manager;
 use VitesseCms\Datafield\Controllers\AdmindatafieldController;
+use VitesseCms\Datafield\Listeners\Admin\AdminMenuListener;
+use VitesseCms\Datafield\Listeners\Controllers\AdmindatafieldControllerListener;
 use VitesseCms\Datafield\Listeners\Models\DatafieldListener;
 use VitesseCms\Datafield\Models\Datafield;
 
