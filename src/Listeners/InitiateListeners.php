@@ -3,6 +3,7 @@
 namespace VitesseCms\Datafield\Listeners;
 
 use Phalcon\Events\Manager;
+use VitesseCms\Datafield\Listeners\Admin\AdminMenuListener;
 
 class InitiateListeners
 {
