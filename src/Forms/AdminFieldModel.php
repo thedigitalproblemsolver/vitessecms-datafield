@@ -10,7 +10,6 @@ use VitesseCms\Datafield\Interfaces\AdminformInterface;
 use VitesseCms\Form\AbstractForm;
 use VitesseCms\Form\Helpers\ElementHelper;
 use VitesseCms\Form\Models\Attributes;
-use VitesseCms\Media\Enums\AssetsEnum;
 
 class AdminFieldModel implements AdminformInterface
 {
@@ -20,7 +19,7 @@ class AdminFieldModel implements AdminformInterface
             'Model',
             'model',
             (new Attributes())->setRequired()
-                ->setInputClass(AssetsEnum::SELECT2)
+                ->setInputClass('select2')
                 ->setOptions(ElementHelper::arrayToSelectOptions(
                     SystemUtil::getModels(true)
                 ))
@@ -35,7 +34,7 @@ class AdminFieldModel implements AdminformInterface
                     'Items from datagroup',
                     'datagroup',
                     (new Attributes())->setMultiple()
-                        ->setInputClass(AssetsEnum::SELECT2)
+                        ->setInputClass('select2')
                         ->setOptions(ElementHelper::arrayToSelectOptions(Datagroup::findAll()))
                 );
                 break;
