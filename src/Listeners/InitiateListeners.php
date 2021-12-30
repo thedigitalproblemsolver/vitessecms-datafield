@@ -16,7 +16,8 @@ class InitiateListeners implements InitiateListenersInterface
             $di->eventsManager->attach('adminMenu', new AdminMenuListener());
         endif;
         $di->eventsManager->attach('contentTag', new TagDatafieldListener(
-            new DatafieldRepository()
+            new DatafieldRepository(),
+            $di->eventsManager
         ));
     }
 }
