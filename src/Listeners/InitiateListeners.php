@@ -17,7 +17,8 @@ class InitiateListeners implements InitiateListenersInterface
         endif;
         $di->eventsManager->attach('contentTag', new TagDatafieldListener(
             new DatafieldRepository(),
-            $di->eventsManager
+            $di->eventsManager,
+            $di->assets
         ));
     }
 }
