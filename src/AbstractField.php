@@ -14,7 +14,7 @@ use VitesseCms\Datafield\Interfaces\AdminformInterface;
 use VitesseCms\Form\AbstractForm;
 use VitesseCms\Datafield\Models\Datafield;
 use VitesseCms\Form\Interfaces\AbstractFormInterface;
-use Phalcon\Di;
+use Phalcon\Di\Di;
 use Phalcon\Utils\Slug;
 use VitesseCms\Form\Models\Attributes;
 
