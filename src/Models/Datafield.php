@@ -37,7 +37,7 @@ class Datafield extends AbstractCollection
     {
         $templates = [];
         $dirs = DirectoryUtil::getChildren(
-            $this->di->config->get('rootDir') . 'Template/core/Views/fields/'
+            $this->getDI()->get('config')->getRootDir() . 'Template/core/Views/fields/'
         );
         foreach ($dirs as $name => $path) :
             $templates[$path] = strtolower($name);

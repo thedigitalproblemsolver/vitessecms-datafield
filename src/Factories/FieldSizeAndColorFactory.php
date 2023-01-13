@@ -3,7 +3,7 @@
 namespace VitesseCms\Datafield\Factories;
 
 use Phalcon\Tag;
-use VitesseCms\Shop\Enums\SizeAndColorEnum;
+use VitesseCms\Shop\Enum\SizeAndColorEnum;
 
 /**
  * Class FieldSizeAndColorFactory
