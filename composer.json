@@ -22,6 +22,6 @@
     "vitessecms/admin": "^1.0.0",
     "vitessecms/core": "^1.2.0",
     "vitessecms/form": "^1.0.0",
-    "vitessecms/datagroup": "^1.0.0"
+    "vitessecms/datagroup": "^1.1.0"
   }
 }
