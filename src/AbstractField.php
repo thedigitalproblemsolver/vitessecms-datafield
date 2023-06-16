@@ -3,8 +3,6 @@
 namespace VitesseCms\Datafield;
 
 use Phalcon\Exception;
-use Phalcon\Filter\Filter;
-use Phalcon\Filter\FilterFactory;
 use ReflectionClass;
 use VitesseCms\Core\Helpers\InjectableHelper;
 use VitesseCms\Database\AbstractCollection;
@@ -18,6 +16,7 @@ use VitesseCms\Datafield\Models\Datafield;
 use VitesseCms\Form\Interfaces\AbstractFormInterface;
 use Phalcon\Di\Di;
 use VitesseCms\Form\Models\Attributes;
+use VitesseCms\Sef\Utils\SefUtil;
 
 abstract class AbstractField extends AbstractInjectable
 {
@@ -33,8 +32,6 @@ abstract class AbstractField extends AbstractInjectable
         if (!is_object($this->di)) :
             $this->di = new InjectableHelper();
         endif;
-
-        $this->filter = (new FilterFactory())->newInstance();
     }
 
     /**
@@ -120,7 +117,7 @@ abstract class AbstractField extends AbstractInjectable
     {
         $slug = $item->_($datafield->_('calling_name'), $languageShort);
         if (is_string($slug)) :
-            return $this->filter->url($slug);
+            return SefUtil::generateSlugFromString($slug);
         endif;
 
         return '';
