@@ -2,6 +2,7 @@
 
 namespace VitesseCms\Datafield\Forms;
 
+use VitesseCms\Admin\Interfaces\AdminModelFormInterface;
 use VitesseCms\Core\Utils\SystemUtil;
 use VitesseCms\Datafield\Helpers\DatafieldUtil;
 use VitesseCms\Form\AbstractForm;
@@ -9,9 +10,9 @@ use VitesseCms\Datafield\Models\Datafield;
 use VitesseCms\Form\Helpers\ElementHelper;
 use VitesseCms\Form\Models\Attributes;
 
-class DataFieldForm extends AbstractForm
+class DataFieldForm extends AbstractForm implements AdminModelFormInterface
 {
-    public function initialize(Datafield $item = null): void
+    public function buildForm(): void
     {
         $this->addText(
             '%CORE_NAME%',
