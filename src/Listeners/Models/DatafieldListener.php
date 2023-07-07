@@ -19,6 +19,8 @@ class DatafieldListener
 
     public function beforeSave(Event $event, Datafield $datafield): void
     {
+        var_dump('DatafieldListener - beforeSave: '.$datafield->getType());
+        die();
         $datafield->getDi()->eventsManager->fire($datafield->getType().':beforeSave', $datafield);
     }
 }

@@ -18,7 +18,9 @@ class InitiateAdminListeners implements InitiateListenersInterface
     {
         $di->eventsManager->attach('adminMenu', new AdminMenuListener());
         $di->eventsManager->attach(AdmindatafieldController::class, new AdmindatafieldControllerListener());
-        
         $di->eventsManager->attach(DatafieldEnum::LISTENER->value, new DatafieldListener(new DatafieldRepository()));
+
+        /** @deprecated if used move rename trigger to DatafieldEnum::LISTENER */
+        $di->eventsManager->attach(Datafield::class, new DatafieldListener(new DatafieldRepository()));
     }
 }
