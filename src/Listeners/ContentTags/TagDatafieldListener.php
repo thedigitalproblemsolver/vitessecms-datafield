@@ -18,31 +18,13 @@ use VitesseCms\Mustache\Enum\ViewEnum;
 
 class TagDatafieldListener extends AbstractTagListener
 {
-    /**
-     * @var DatafieldRepository
-     */
-    private $datafieldRepository;
-
-    /**
-     * @var Manager
-     */
-    private $eventsManager;
-
-    /**
-     * @var AssetsService
-     */
-    private $assetsService;
-
     public function __construct(
-        DatafieldRepository $datafieldRepository,
-        Manager $eventsManager,
-        AssetsService $assetsService
+        private readonly DatafieldRepository $datafieldRepository,
+        private readonly Manager $eventsManager,
+        private readonly AssetsService $assetsService
     )
     {
         $this->name = 'DATAFIELD';
-        $this->datafieldRepository = $datafieldRepository;
-        $this->eventsManager = $eventsManager;
-        $this->assetsService = $assetsService;
     }
 
     protected function parse(EventVehicleHelper $contentVehicle, TagListenerDTO $tagListenerDTO): void
@@ -63,7 +45,11 @@ class TagDatafieldListener extends AbstractTagListener
         endif;
 
         if($replace instanceof UTCDateTime) {
-            $replace = $replace->toDateTime()->format('Y-m-d');
+            $dateFormat = 'Y-m-d';
+            if($field->has('date_format')) {
+                $dateFormat = $field->getString('date_format');
+            }
+            $replace = $replace->toDateTime()->format($dateFormat);
         }
 
         $contentVehicle->setContent(

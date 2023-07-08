@@ -15,7 +15,7 @@ class AdminFieldText implements AdminformInterface
     public static function buildForm(AbstractForm $form, AbstractCollection $item): void
     {
         $form->addDropdown(
-            'Input Type',
+            '%DATAFIELD_INPUTTYPE%',
             'inputType',
             (new Attributes())
                 ->setRequired()
@@ -27,7 +27,7 @@ class AdminFieldText implements AdminformInterface
                 self::addHidden($form, $item);
                 break;
             case AdminFieldTextInputTypesEnum::DATE->value:
-                $form->addText('Date format', 'date_format', (new Attributes())->setPlaceholder('default: Y-m-d'));
+                $form->addText('%DATAFIELD_DATE_FORMAT%', 'date_format', (new Attributes())->setPlaceholder('%DATAFIELD_DATE_FORMAT_PLACEHOLDER%'));
                 break;
         }
     }
