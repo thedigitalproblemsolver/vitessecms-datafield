@@ -2,6 +2,7 @@
 
 namespace VitesseCms\Datafield\Listeners\ContentTags;
 
+use MongoDB\BSON\UTCDateTime;
 use Phalcon\Events\Manager;
 use VitesseCms\Content\DTO\TagListenerDTO;
 use VitesseCms\Content\Helpers\EventVehicleHelper;
@@ -49,6 +50,7 @@ class TagDatafieldListener extends AbstractTagListener
         $tagOptions = explode(';', $tagListenerDTO->getTagString());
         $field = $this->datafieldRepository->getById($tagOptions[1]);
         $types = array_reverse(explode('\\',$field->getType()));
+
         if(isset($tagOptions[2])):
             $replace = $this->eventsManager->fire(
                 ViewEnum::RENDER_PARTIAL_EVENT,
@@ -59,6 +61,10 @@ class TagDatafieldListener extends AbstractTagListener
         else :
             $replace = $contentVehicle->getView()->getCurrentItem()->_($field->getCallingName());
         endif;
+
+        if($replace instanceof UTCDateTime) {
+            $replace = $replace->toDateTime()->format('Y-m-d');
+        }
 
         $contentVehicle->setContent(
             str_replace(
