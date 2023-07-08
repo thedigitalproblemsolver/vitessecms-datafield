@@ -8,30 +8,11 @@ use VitesseCms\Form\Interfaces\AbstractFormInterface;
 
 class Datafield extends AbstractCollection
 {
-    /**
-     * @var string
-     */
-    public $calling_name;
-
-    /**
-     * @var string
-     */
-    public $datagroup;
-
-    /**
-     * @var string
-     */
-    public $type;
-
-    /**
-     * @var string
-     */
-    public $model;
-
-    /**
-     * @var string
-     */
-    public $inputType;
+    public ?string $calling_name;
+    public ?string $datagroup;
+    public ?string $type;
+    public ?string $model;
+    public ?string $inputType;
 
     public function getTemplates(): array
     {
@@ -89,7 +70,7 @@ class Datafield extends AbstractCollection
         return $this->datagroup;
     }
 
-    public function getInputType(): string
+    public function getInputType(): ?string
     {
         return $this->inputType;
     }
