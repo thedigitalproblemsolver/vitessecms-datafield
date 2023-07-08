@@ -6,13 +6,14 @@ use Phalcon\Events\Event;
 use VitesseCms\Admin\AbstractAdminController;
 use VitesseCms\Admin\Forms\AdminlistFormInterface;
 use VitesseCms\Core\Utils\SystemUtil;
+use VitesseCms\Datafield\Controllers\AdmindatafieldController;
 use VitesseCms\Datafield\Helpers\DatafieldUtil;
 use VitesseCms\Form\Helpers\ElementHelper;
 use VitesseCms\Form\Models\Attributes;
 
 class AdmindatafieldControllerListener
 {
-    public function adminListFilter(Event $event, AbstractAdminController $controller, AdminlistFormInterface $form): string
+    public function adminListFilter(Event $event, AdmindatafieldController $controller, AdminlistFormInterface $form): void
     {
         $form->addNameField($form);
 
@@ -25,10 +26,5 @@ class AdmindatafieldControllerListener
         );
 
         $form->addPublishedField($form);
-
-        return $form->renderForm(
-            $controller->getLink() . '/' . $controller->router->getActionName(),
-            'adminFilter'
-        );
     }
 }

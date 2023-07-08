@@ -2,6 +2,7 @@
 
 namespace VitesseCms\Datafield\Listeners\ContentTags;
 
+use MongoDB\BSON\UTCDateTime;
 use Phalcon\Events\Manager;
 use VitesseCms\Content\DTO\TagListenerDTO;
 use VitesseCms\Content\Helpers\EventVehicleHelper;
@@ -17,31 +18,13 @@ use VitesseCms\Mustache\Enum\ViewEnum;
 
 class TagDatafieldListener extends AbstractTagListener
 {
-    /**
-     * @var DatafieldRepository
-     */
-    private $datafieldRepository;
-
-    /**
-     * @var Manager
-     */
-    private $eventsManager;
-
-    /**
-     * @var AssetsService
-     */
-    private $assetsService;
-
     public function __construct(
-        DatafieldRepository $datafieldRepository,
-        Manager $eventsManager,
-        AssetsService $assetsService
+        private readonly DatafieldRepository $datafieldRepository,
+        private readonly Manager $eventsManager,
+        private readonly AssetsService $assetsService
     )
     {
         $this->name = 'DATAFIELD';
-        $this->datafieldRepository = $datafieldRepository;
-        $this->eventsManager = $eventsManager;
-        $this->assetsService = $assetsService;
     }
 
     protected function parse(EventVehicleHelper $contentVehicle, TagListenerDTO $tagListenerDTO): void
@@ -49,6 +32,7 @@ class TagDatafieldListener extends AbstractTagListener
         $tagOptions = explode(';', $tagListenerDTO->getTagString());
         $field = $this->datafieldRepository->getById($tagOptions[1]);
         $types = array_reverse(explode('\\',$field->getType()));
+
         if(isset($tagOptions[2])):
             $replace = $this->eventsManager->fire(
                 ViewEnum::RENDER_PARTIAL_EVENT,
@@ -59,6 +43,14 @@ class TagDatafieldListener extends AbstractTagListener
         else :
             $replace = $contentVehicle->getView()->getCurrentItem()->_($field->getCallingName());
         endif;
+
+        if($replace instanceof UTCDateTime) {
+            $dateFormat = 'Y-m-d';
+            if($field->has('date_format')) {
+                $dateFormat = $field->getString('date_format');
+            }
+            $replace = $replace->toDateTime()->format($dateFormat);
+        }
 
         $contentVehicle->setContent(
             str_replace(
