@@ -22,9 +22,14 @@ class AdminFieldText implements AdminformInterface
                 ->setOptions(ElementHelper::enumToSelectOptions(AdminFieldTextInputTypesEnum::cases()))
         );
 
-        if ($item->getInputType() === 'hidden') :
-            self::addHidden($form, $item);
-        endif;
+        switch($item->getInputType()) {
+            case AdminFieldTextInputTypesEnum::HIDDEN->value :
+                self::addHidden($form, $item);
+                break;
+            case AdminFieldTextInputTypesEnum::DATE->value:
+                $form->addText('Date format', 'date_format', (new Attributes())->setPlaceholder('default: Y-m-d'));
+                break;
+        }
     }
 
     protected static function addHidden(AbstractForm $form, AbstractCollection $item): void
