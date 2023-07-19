@@ -31,25 +31,29 @@ class TagDatafieldListener extends AbstractTagListener
     {
         $tagOptions = explode(';', $tagListenerDTO->getTagString());
         $field = $this->datafieldRepository->getById($tagOptions[1]);
-        $types = array_reverse(explode('\\',$field->getType()));
+        $replace = '';
+        
+        if($field !== null) {
+            $types = array_reverse(explode('\\', $field->getType()));
 
-        if(isset($tagOptions[2])):
-            $replace = $this->eventsManager->fire(
-                ViewEnum::RENDER_PARTIAL_EVENT,
-                new RenderPartialDTO(strtolower($types[0]).'/'.$tagOptions[2]),
-                $contentVehicle->getView()->getCurrentItem()
-            );
-            $this->assetsService->setEventLoader(MediaEnum::ASSETS_LISTENER.':'.$tagOptions[2]);
-        else :
-            $replace = $contentVehicle->getView()->getCurrentItem()->_($field->getCallingName());
-        endif;
+            if (isset($tagOptions[2])):
+                $replace = $this->eventsManager->fire(
+                    ViewEnum::RENDER_PARTIAL_EVENT,
+                    new RenderPartialDTO(strtolower($types[0]) . '/' . $tagOptions[2]),
+                    $contentVehicle->getView()->getCurrentItem()
+                );
+                $this->assetsService->setEventLoader(MediaEnum::ASSETS_LISTENER . ':' . $tagOptions[2]);
+            else :
+                $replace = $contentVehicle->getView()->getCurrentItem()->_($field->getCallingName());
+            endif;
 
-        if($replace instanceof UTCDateTime) {
-            $dateFormat = 'Y-m-d';
-            if($field->has('date_format')) {
-                $dateFormat = $field->getString('date_format');
+            if ($replace instanceof UTCDateTime) {
+                $dateFormat = 'Y-m-d';
+                if ($field->has('date_format')) {
+                    $dateFormat = $field->getString('date_format');
+                }
+                $replace = $replace->toDateTime()->format($dateFormat);
             }
-            $replace = $replace->toDateTime()->format($dateFormat);
         }
 
         $contentVehicle->setContent(
