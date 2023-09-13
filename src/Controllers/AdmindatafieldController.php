@@ -1,7 +1,10 @@
-<?php declare(strict_types=1);
+<?php
+declare(strict_types=1);
 
 namespace VitesseCms\Datafield\Controllers;
 
+use ArrayIterator;
+use stdClass;
 use VitesseCms\Admin\Interfaces\AdminModelAddableInterface;
 use VitesseCms\Admin\Interfaces\AdminModelCopyableInterface;
 use VitesseCms\Admin\Interfaces\AdminModelDeletableInterface;
@@ -36,14 +39,13 @@ class AdmindatafieldController extends AbstractControllerAdmin implements
     AdminModelAddableInterface,
     AdminModelCopyableInterface
 {
-    use TraitAdminModelPublishable,
-        TraitAdminModelList,
-        TraitAdminModelEditable,
-        TraitAdminModelSave,
-        TraitAdminModelDeletable,
-        TraitAdminModelAddable,
-        TraitAdminModelCopyable
-        ;
+    use TraitAdminModelAddable;
+    use TraitAdminModelCopyable;
+    use TraitAdminModelDeletable;
+    use TraitAdminModelEditable;
+    use TraitAdminModelList;
+    use TraitAdminModelPublishable;
+    use TraitAdminModelSave;
 
     private readonly DatafieldRepository $datafieldRepository;
 
@@ -51,7 +53,7 @@ class AdmindatafieldController extends AbstractControllerAdmin implements
     {
         parent::OnConstruct();
 
-        $this->datafieldRepository = $this->eventsManager->fire(DatafieldEnum::GET_REPOSITORY->value,new \stdClass());
+        $this->datafieldRepository = $this->eventsManager->fire(DatafieldEnum::GET_REPOSITORY->value, new stdClass());
     }
 
     public function getModel(string $id): ?AbstractCollection
@@ -62,7 +64,7 @@ class AdmindatafieldController extends AbstractControllerAdmin implements
         };
     }
 
-    public function getModelList( ?FindValueIterator $findValueIterator): \ArrayIterator
+    public function getModelList(?FindValueIterator $findValueIterator): ArrayIterator
     {
         return $this->datafieldRepository->findAll(
             $findValueIterator,
