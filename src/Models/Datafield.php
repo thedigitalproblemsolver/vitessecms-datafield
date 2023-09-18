@@ -1,15 +1,17 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace VitesseCms\Datafield\Models;
 
-use VitesseCms\Database\AbstractCollection;
 use VitesseCms\Core\Utils\DirectoryUtil;
+use VitesseCms\Database\AbstractCollection;
 use VitesseCms\Form\Interfaces\AbstractFormInterface;
 
 class Datafield extends AbstractCollection
 {
     public ?string $calling_name;
-    public ?string $datagroup;
+    public null|string|array $datagroup;
     public ?string $type;
     public ?string $model;
     public ?string $inputType;
@@ -32,6 +34,17 @@ class Datafield extends AbstractCollection
         $object = $this->getType();
         /** @noinspection PhpUndefinedMethodInspection */
         (new $object())->renderFilter($filter, $this);
+    }
+
+    public function getType(): ?string
+    {
+        return $this->type;
+    }
+
+    public function setType(string $type): Datafield
+    {
+        $this->type = $type;
+        return $this;
     }
 
     public function renderAdminlistFilter(AbstractFormInterface $filter): void
@@ -75,20 +88,9 @@ class Datafield extends AbstractCollection
         return $this->inputType;
     }
 
-    public function getType(): ?string
+    public function getModel(): string
     {
-        return $this->type;
-    }
-
-    public function setType(string $type): Datafield
-    {
-        $this->type = $type;
-        return $this;
-    }
-
-    public function getModel(): ?string
-    {
-        return $this->model;
+        return $this->model ?? '';
     }
 
     public function setModel(string $model): Datafield

@@ -1,41 +1,31 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace VitesseCms\Datafield\Migrations;
 
-use VitesseCms\Cli\Services\TerminalServiceInterface;
-use VitesseCms\Configuration\Services\ConfigServiceInterface;
-use VitesseCms\Datafield\Repositories\AdminRepositoryCollection;
-use VitesseCms\Datafield\Repositories\DatafieldRepository;
-use VitesseCms\Install\Interfaces\MigrationInterface;
+use stdClass;
+use VitesseCms\Database\AbstractMigration;
+use VitesseCms\Datafield\Enum\DatafieldEnum;
 
-class Migration_20210522 implements MigrationInterface
+class Migration_20210522 extends AbstractMigration
 {
-    /**
-     * @var AdminRepositoryCollection
-     */
-    private $repository;
-
-    public function __construct()
-    {
-        $this->repository = new AdminRepositoryCollection(
-            new DatafieldRepository()
-        );
-    }
-
-    public function up(ConfigServiceInterface $configService, TerminalServiceInterface $terminalService): bool
+    public function up(): bool
     {
         $result = true;
-        if (!self::parseDatafieldType($terminalService)) :
+        if (!self::parseDatafieldType()) :
             $result = false;
         endif;
 
         return $result;
     }
 
-    private function parseDatafieldType(TerminalServiceInterface $terminalService): bool
+    private function parseDatafieldType(): bool
     {
         $result = true;
-        $datafields = $this->repository->datafield->findAll(null, false);
+        $datafieldRepository = $this->eventsManager->fire(DatafieldEnum::GET_REPOSITORY->value, new stdClass());
+
+        $datafields = $datafieldRepository->findAll(null, false);
         $search = [
             'VitesseCms\Datafield\Models\FieldAddtocart',
             'VitesseCms\Datafield\Models\FieldAmazonBrowseNode',
@@ -80,17 +70,24 @@ class Migration_20210522 implements MigrationInterface
         ];
         while ($datafields->valid()):
             $datafield = $datafields->current();
-            $type = str_replace($search,$replace,$datafield->getType());
-            if(substr_count($type,'VitesseCms\Datafield\Models') === 1 ):
+            $type = str_replace($search, $replace, $datafield->getType());
+            if (substr_count($type, 'VitesseCms\Datafield\Models') === 1):
                 $result = false;
-                $terminalService->printError('Wrong type "'.str_replace($search,$replace,$datafield->getType()).'" for datafield "'.$datafield->getNameField().'"');
+                $this->terminalService->printError(
+                    'Wrong type "' . str_replace(
+                        $search,
+                        $replace,
+                        $datafield->getType()
+                    ) . '" for datafield "' . $datafield->getNameField() . '"'
+                );
             else :
                 $datafield->setType($type)->save();
             endif;
             $datafields->next();
         endwhile;
 
-        $terminalService->printMessage('datafields type repaired');
+        $this->terminalService->printMessage('datafields type repaired');
+
         return $result;
     }
 }
