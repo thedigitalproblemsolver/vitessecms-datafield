@@ -32,8 +32,14 @@ class Migration_20210422 extends AbstractMigration
     {
         $result = true;
         $datafields = $this->datafieldRepository->findAll(null, false);
-        $search = ['Modules\Datafield\Models\\'];
-        $replace = ['VitesseCms\Datafield\Models\\'];
+        $search = [
+            'Modules\Field\Models\\',
+            'Modules\Datafield\Models\\'
+        ];
+        $replace = [
+            'Modules\Datafield\Models\\',
+            'VitesseCms\Datafield\Models\\'
+        ];
 
         while ($datafields->valid()):
             $datafield = $datafields->current();
