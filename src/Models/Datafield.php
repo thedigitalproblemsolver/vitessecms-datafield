@@ -80,7 +80,7 @@ class Datafield extends AbstractCollection
 
     public function getDatagroup(): ?string
     {
-        return $this->datagroup;
+        return $this->datagroup ?? null;
     }
 
     public function getInputType(): ?string
