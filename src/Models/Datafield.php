@@ -8,7 +8,7 @@ use VitesseCms\Core\Utils\DirectoryUtil;
 use VitesseCms\Database\AbstractCollection;
 use VitesseCms\Form\Interfaces\AbstractFormInterface;
 
-class Datafield extends AbstractCollection
+final class Datafield extends AbstractCollection
 {
     public ?string $calling_name;
     public null|string|array $datagroup;
@@ -85,7 +85,7 @@ class Datafield extends AbstractCollection
 
     public function getInputType(): ?string
     {
-        return $this->inputType;
+        return $this->inputType ?? null;
     }
 
     public function getModel(): string
