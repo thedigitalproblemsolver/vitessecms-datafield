@@ -12,7 +12,7 @@ final class Datafield extends AbstractCollection
 {
     public ?string $calling_name;
     public null|string|array $datagroup;
-    public ?string $type;
+    public ?string $type = null;
     public ?string $model;
     public ?string $inputType;
 
