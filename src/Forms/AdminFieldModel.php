@@ -1,17 +1,19 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace VitesseCms\Datafield\Forms;
 
 use VitesseCms\Content\Models\Item;
-use VitesseCms\Database\AbstractCollection;
-use VitesseCms\Datagroup\Models\Datagroup;
 use VitesseCms\Core\Utils\SystemUtil;
+use VitesseCms\Database\AbstractCollection;
 use VitesseCms\Datafield\Interfaces\AdminformInterface;
+use VitesseCms\Datagroup\Models\Datagroup;
 use VitesseCms\Form\AbstractForm;
 use VitesseCms\Form\Helpers\ElementHelper;
 use VitesseCms\Form\Models\Attributes;
 
-class AdminFieldModel implements AdminformInterface
+final class AdminFieldModel implements AdminformInterface
 {
     public static function buildForm(AbstractForm $form, AbstractCollection $item): void
     {
@@ -20,24 +22,24 @@ class AdminFieldModel implements AdminformInterface
             'model',
             (new Attributes())->setRequired()
                 ->setInputClass('select2')
-                ->setOptions(ElementHelper::arrayToSelectOptions(
-                    SystemUtil::getModels(true)
-                ))
+                ->setOptions(
+                    ElementHelper::arrayToSelectOptions(
+                        SystemUtil::getModels(true)
+                    )
+                )
         )
             ->addNumber('Display limit', 'displayLimit')
             ->addToggle('use Select2', 'useSelect2')
             ->addToggle('Select multiple', 'multiple');
 
-        switch ($item->_('model')) :
-            case Item::class:
-                $form->addDropdown(
-                    'Items from datagroup',
-                    'datagroup',
-                    (new Attributes())->setMultiple()
-                        ->setInputClass('select2')
-                        ->setOptions(ElementHelper::arrayToSelectOptions(Datagroup::findAll()))
-                );
-                break;
-        endswitch;
+        if ($item->_('model') === Item::class) {
+            $form->addDropdown(
+                'Items from datagroup',
+                'datagroups',
+                (new Attributes())->setMultiple()
+                    ->setInputClass('select2')
+                    ->setOptions(ElementHelper::arrayToSelectOptions(Datagroup::findAll()))
+            );
+        }
     }
 }

@@ -80,6 +80,10 @@ final class Datafield extends AbstractCollection
 
     public function getDatagroup(): ?string
     {
+        if (is_array($this->datagroup)) {
+            return null;
+        }
+
         return $this->datagroup ?? null;
     }
 
