@@ -10,34 +10,34 @@
         <th></th>
     </tr>
     {{#sizeAndColorVariations}}
-    <tr id="{{id}}">
-        <td>
-            {{{skuElement}}}
-        </td>
-        <td>
-            {{{sizeElement}}}
-        </td>
-        <td>
-            <div class="input-group colorpicker">
-                {{{colorElement}}}
-                <span class="input-group-prepend"><i></i></span>
-            </div>
-        </td>
-        <td>
-            {{{stockElement}}}
-        </td>
-        <td>
-            {{{stockMinimalElement}}}
-        </td>
-        <td>
-            {{{eanElement}}}
-        </td>
-        <td>
-            <a href="#" class="btn btn-danger delete" id="delete_{{id}}">
-                <i class="fa fa-trash"></i>
-            </a>
-        </td>
-    </tr>
+        <tr id="{{id}}">
+            <td>
+                {{{skuElement}}}
+            </td>
+            <td>
+                {{{sizeElement}}}
+            </td>
+            <td>
+                <div class="input-group colorpicker">
+                    {{{colorElement}}}
+                    <span class="input-group-prepend"><i></i></span>
+                </div>
+            </td>
+            <td>
+                {{{stockElement}}}
+            </td>
+            <td>
+                {{{stockMinimalElement}}}
+            </td>
+            <td>
+                {{{eanElement}}}
+            </td>
+            <td>
+                <a href="#" class="btn btn-danger delete" id="delete_{{id}}">
+                    <i class="fa fa-trash"></i>
+                </a>
+            </td>
+        </tr>
     {{/sizeAndColorVariations}}
     <tr id="size-and-color-baserow">
         <td>
@@ -81,18 +81,18 @@
                 </div>
                 <div class="card-block" style="overflow:hidden;text-align: center">
                     {{#image}}
-                        <img src="/uploads/{{ACCOUNT}}/{{image}}?h=150" />
+                        <img src="{{uploadUri}}{{image}}?h=150"/>
                     {{/image}}
                 </div>
                 <div class="card-footer">
                     <div class="input-group">
                         <input
-                            id="size-and-color-image-{{id}}"
-                            class="form-control"
-                            name="{{name}}"
-                            value="{{image}}"
-                            readonly="readonly"
-                            type="text"
+                                id="size-and-color-image-{{id}}"
+                                class="form-control"
+                                name="{{name}}"
+                                value="{{image}}"
+                                readonly="readonly"
+                                type="text"
                         />
                         <span class="input-group-prepend">
                             <a id="btn_size-and-color-image-{{id}}" href="/filemanager/index" class="openfilemanager">
