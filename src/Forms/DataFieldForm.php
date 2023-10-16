@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace VitesseCms\Datafield\Forms;
 
@@ -6,14 +8,10 @@ use VitesseCms\Admin\Interfaces\AdminModelFormInterface;
 use VitesseCms\Core\Utils\SystemUtil;
 use VitesseCms\Datafield\Helpers\DatafieldUtil;
 use VitesseCms\Form\AbstractForm;
-use VitesseCms\Datafield\Models\Datafield;
 use VitesseCms\Form\Helpers\ElementHelper;
 use VitesseCms\Form\Models\Attributes;
 
-/**
- * @property Datafield $entity
- */
-class DataFieldForm extends AbstractForm implements AdminModelFormInterface
+final class DataFieldForm extends AbstractForm implements AdminModelFormInterface
 {
     public function buildForm(): void
     {
@@ -23,15 +21,22 @@ class DataFieldForm extends AbstractForm implements AdminModelFormInterface
                 '%ADMIN_DATAFIELD_TYPE%',
                 'type',
                 (new Attributes())
-                    ->setOptions(ElementHelper::arrayToSelectOptions(DatafieldUtil::getTypes(
-                        SystemUtil::getModules($this->configuration), '/Fields/'
-                    )))
+                    ->setOptions(
+                        ElementHelper::arrayToSelectOptions(
+                            DatafieldUtil::getTypes(
+                                SystemUtil::getModules($this->configuration),
+                                '/Fields/'
+                            )
+                        )
+                    )
                     ->setRequired()
             );
 
         if ($this->entity !== null && $this->entity->getType() !== null) {
             $object = $this->entity->getType();
-            (new $object())->buildAdminForm($this, $this->entity);
+            if (class_exists($object)) {
+                (new $object())->buildAdminForm($this, $this->entity);
+            }
         }
 
         $this->addToggle('%ADMIN_MULTILINGUAL%', 'multilang')

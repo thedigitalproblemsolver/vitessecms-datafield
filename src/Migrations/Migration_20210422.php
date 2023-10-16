@@ -1,87 +1,94 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace VitesseCms\Datafield\Migrations;
 
-use VitesseCms\Cli\Services\TerminalServiceInterface;
-use VitesseCms\Configuration\Services\ConfigServiceInterface;
-use VitesseCms\Datafield\Repositories\AdminRepositoryCollection;
+use stdclass;
+use VitesseCms\Database\AbstractMigration;
+use VitesseCms\Datafield\Enum\DatafieldEnum;
 use VitesseCms\Datafield\Repositories\DatafieldRepository;
-use VitesseCms\Install\Interfaces\MigrationInterface;
 
-class Migration_20210422 implements MigrationInterface
+class Migration_20210422 extends AbstractMigration
 {
-    /**
-     * @var AdminRepositoryCollection
-     */
-    private $repository;
+    private readonly DatafieldRepository $datafieldRepository;
 
-    public function __construct()
+    public function up(): bool
     {
-        $this->repository = new AdminRepositoryCollection(
-            new DatafieldRepository()
-        );
-    }
+        $this->datafieldRepository = $this->eventsManager->fire(DatafieldEnum::GET_REPOSITORY->value, new stdClass());
 
-    public function up(ConfigServiceInterface $configService, TerminalServiceInterface $terminalService): bool
-    {
         $result = true;
-        if (!self::parseDatafieldType($terminalService)) :
+        if (!self::parseDatafieldType()) :
             $result = false;
         endif;
-        if (!self::parseDatafieldModels($terminalService)) :
+        if (!self::parseDatafieldModels()) :
             $result = false;
         endif;
 
         return $result;
     }
 
-    private function parseDatafieldType(TerminalServiceInterface $terminalService): bool
+    private function parseDatafieldType(): bool
     {
         $result = true;
-        $datafields = $this->repository->datafield->findAll(null, false);
-        $search = ['Modules\Datafield\Models\\'];
-        $replace = ['VitesseCms\Datafield\Models\\'];
+        $datafields = $this->datafieldRepository->findAll(null, false);
+        $search = [
+            'Modules\Field\Models\\',
+            'Modules\Datafield\Models\\'
+        ];
+        $replace = [
+            'Modules\Datafield\Models\\',
+            'VitesseCms\Datafield\Models\\'
+        ];
+
         while ($datafields->valid()):
             $datafield = $datafields->current();
-            $type = str_replace($search,$replace,$datafield->getType());
-            if(substr_count($type,'\\') === 0 ):
-                $type = 'VitesseCms\Datafield\Models\\'.$type;
+            $type = str_replace($search, $replace, $datafield->getType());
+            if (substr_count($type, '\\') === 0):
+                $type = 'VitesseCms\Datafield\Models\\' . $type;
             endif;
-            if(substr_count($type,'VitesseCms\Datafield\Models') === 1 ):
+            if (substr_count($type, 'VitesseCms\Datafield\Models') === 1):
                 $datafield->setType($type)->save();
             else :
-                $terminalService->printError('Wrong type "'.str_replace($search,$replace,$datafield->getType()).'" for datafield "'.$datafield->getNameField().'"');
+                $this->terminalService->printError(
+                    'Wrong type "' . str_replace(
+                        $search,
+                        $replace,
+                        $datafield->getType()
+                    ) . '" for datafield "' . $datafield->getNameField() . '"'
+                );
+                $result = false;
             endif;
             $datafields->next();
         endwhile;
 
-        $terminalService->printMessage('datafields type repaired');
+        $this->terminalService->printMessage('datafields type repaired');
+
         return $result;
     }
 
-    private function parseDatafieldModels(TerminalServiceInterface $terminalService): bool
+    private function parseDatafieldModels(): bool
     {
+        echo 'b';
         $result = true;
-        $datafields = $this->repository->datafield->findAll(null, false);
-        $search = [
-            'Modules\\'
-        ];
-        $replace = [
-            'VitesseCms\\'
-        ];
+        $datafields = $this->datafieldRepository->findAll(null, false);
+        $search = ['Modules\\'];
+        $replace = ['VitesseCms\\'];
         while ($datafields->valid()):
             $datafield = $datafields->current();
             $model = str_replace($search, $replace, $datafield->getModel());
-            if (!empty($model) && substr($model, 0, 10) === 'VitesseCms') :
+            if (!empty($model) && str_starts_with($model, 'VitesseCms')) :
                 $datafield->setModel($model)->save();
-            elseif(!empty($model)) :
-                $terminalService->printError('wrong model "' . $model . '" for datafield "' . $datafield->getNameField() . '"');
+            elseif (!empty($model)) :
+                $this->terminalService->printError(
+                    'wrong model "' . $model . '" for datafield "' . $datafield->getNameField() . '"'
+                );
                 $result = false;
             endif;
 
             $datafields->next();
         endwhile;
-        $terminalService->printMessage('datafields model repaired');
+        $this->terminalService->printMessage('datafields model repaired');
 
         return $result;
     }

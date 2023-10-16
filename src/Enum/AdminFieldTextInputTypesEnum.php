@@ -1,7 +1,9 @@
-<?php declare(strict_types=1);
+<?php
+declare(strict_types=1);
 
 namespace VitesseCms\Datafield\Enum;
 
+use Exception;
 use ScssPhp\ScssPhp\Node\Number;
 use VitesseCms\Form\Interfaces\SelectOptionEnumInterface;
 
@@ -16,7 +18,7 @@ enum AdminFieldTextInputTypesEnum: string implements SelectOptionEnumInterface
     case TEXT = 'text';
     case URL = 'url';
 
-    public static function getLabel( $label): string
+    public static function getLabel($label): string
     {
         return match ($label) {
             self::TEXT => '%DATAFIELD_INPUTTYPE_TEXT%',
@@ -27,7 +29,7 @@ enum AdminFieldTextInputTypesEnum: string implements SelectOptionEnumInterface
             self::URL => '%DATAFIELD_INPUTTYPE_URL%',
             self::PASSWORD => '%DATAFIELD_INPUTTYPE_PASSWORD%',
             self::DATE => '%DATAFIELD_INPUTTYPE_DATE%',
-            default => throw new \Exception('Unexpected match value')
+            default => throw new Exception('Unexpected match value')
         };
     }
 }
