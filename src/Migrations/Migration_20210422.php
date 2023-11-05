@@ -69,7 +69,6 @@ class Migration_20210422 extends AbstractMigration
 
     private function parseDatafieldModels(): bool
     {
-        echo 'b';
         $result = true;
         $datafields = $this->datafieldRepository->findAll(null, false);
         $search = ['Modules\\'];
