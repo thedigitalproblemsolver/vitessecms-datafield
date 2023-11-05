@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace VitesseCms\Datafield\Listeners\ContentTags;
 
@@ -7,13 +9,10 @@ use Phalcon\Events\Manager;
 use VitesseCms\Content\DTO\TagListenerDTO;
 use VitesseCms\Content\Helpers\EventVehicleHelper;
 use VitesseCms\Content\Listeners\ContentTags\AbstractTagListener;
-use VitesseCms\Content\Models\Item;
-use VitesseCms\Datafield\Models\Datafield;
 use VitesseCms\Datafield\Repositories\DatafieldRepository;
 use VitesseCms\Media\Enums\MediaEnum;
 use VitesseCms\Media\Services\AssetsService;
 use VitesseCms\Mustache\DTO\RenderPartialDTO;
-use VitesseCms\Mustache\DTO\RenderTemplateDTO;
 use VitesseCms\Mustache\Enum\ViewEnum;
 
 class TagDatafieldListener extends AbstractTagListener
@@ -22,8 +21,7 @@ class TagDatafieldListener extends AbstractTagListener
         private readonly DatafieldRepository $datafieldRepository,
         private readonly Manager $eventsManager,
         private readonly AssetsService $assetsService
-    )
-    {
+    ) {
         $this->name = 'DATAFIELD';
     }
 
@@ -32,8 +30,8 @@ class TagDatafieldListener extends AbstractTagListener
         $tagOptions = explode(';', $tagListenerDTO->getTagString());
         $field = $this->datafieldRepository->getById($tagOptions[1]);
         $replace = '';
-        
-        if($field !== null) {
+
+        if ($field !== null) {
             $types = array_reverse(explode('\\', $field->getType()));
 
             if (isset($tagOptions[2])):
