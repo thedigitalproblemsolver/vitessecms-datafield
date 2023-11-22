@@ -8,7 +8,7 @@ use VitesseCms\Core\Utils\DirectoryUtil;
 use VitesseCms\Database\AbstractCollection;
 use VitesseCms\Form\Interfaces\AbstractFormInterface;
 
-final class Datafield extends AbstractCollection
+class Datafield extends AbstractCollection
 {
     public ?string $calling_name;
     public null|string|array $datagroup;
