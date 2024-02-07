@@ -1,4 +1,5 @@
-<?php declare(strict_types=1);
+<?php
+declare(strict_types=1);
 
 namespace VitesseCms\Datafield\Listeners;
 
@@ -12,16 +13,22 @@ use VitesseCms\Datafield\Repositories\DatafieldRepository;
 
 class InitiateListeners implements InitiateListenersInterface
 {
-    public static function setListeners(InjectableInterface $di): void
+    public static function setListeners(InjectableInterface $injectable): void
     {
-        if($di->user->hasAdminAccess()) :
-            $di->eventsManager->attach('adminMenu', new AdminMenuListener());
+        if ($injectable->user->hasAdminAccess()) :
+            $injectable->eventsManager->attach('adminMenu', new AdminMenuListener());
         endif;
-        $di->eventsManager->attach('contentTag', new TagDatafieldListener(
-            new DatafieldRepository(),
-            $di->eventsManager,
-            $di->assets
-        ));
-        $di->eventsManager->attach(DatafieldEnum::LISTENER->value, new DatafieldListener(new DatafieldRepository()));
+        $injectable->eventsManager->attach(
+            'contentTag',
+            new TagDatafieldListener(
+                new DatafieldRepository(),
+                $injectable->eventsManager,
+                $injectable->assets
+            )
+        );
+        $injectable->eventsManager->attach(
+            DatafieldEnum::LISTENER->value,
+            new DatafieldListener(new DatafieldRepository())
+        );
     }
 }
